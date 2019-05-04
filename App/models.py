@@ -65,7 +65,6 @@ class Landscape(db.Model):
     landscapeName = db.Column(db.String(50))
     price = db.Column(db.String(50))
     score = db.Column(db.String(50))
-    landscapeId = db.Column(db.String(50))
     Introduction = db.Column(db.Text)
     pic = db.Column(db.Text)
 
