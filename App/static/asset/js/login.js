@@ -8,15 +8,13 @@ var API = layui.api;
 function login() {
 
  	layui.use('form', function(){
-	  var form = layui.form;
+		var form = layui.form;
 	  //监听提交
 	  form.on('submit(login)', function(data){
+			var data = $("#login-form").serialize();
 	    HTTP.ajax({
 				url: API.login,
-				data: {
-					userName: '222',
-					password: '1334'
-				},
+				data: data,
 	    	success: function(res) {
 	    		if (!isSuccess(res)) {
 	    			layer.msg('用户名或密码错误');
