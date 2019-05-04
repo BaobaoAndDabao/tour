@@ -58,6 +58,27 @@ class Hotel(db.Model):
         return dict
 
 
+class Landscape(db.Model):
+    __table__name = 'landscape'
+    landscapeId = db.Column(db.Integer, primary_key=True)
+    address = db.Column(db.String(50))
+    landscapeName = db.Column(db.String(50))
+    price = db.Column(db.String(50))
+    score = db.Column(db.String(50))
+    landscapeId = db.Column(db.String(50))
+    Introduction = db.Column(db.Text)
+    pic = db.Column(db.Text)
+
+    def to_json(self):
+        dict = self.__dict__
+        if "_sa_instance_state" in dict:
+            del dict["_sa_instance_state"]
+        return dict
+
+
+
+
+
 
 class UserBuyRecord(db.Model):
     __table__name = 'userBuyRecord'
