@@ -1,6 +1,7 @@
 from flask import Flask
 
 from App.FlightApi import init_flightBlue
+from App.HotelApi import init_hotelBlue
 from App.api import init_blue
 from App.ext import init_ext
 from App.settings import envs
@@ -13,6 +14,7 @@ def create_app():
 
     init_blue(app)
     init_flightBlue(app)
+    init_hotelBlue(app)
 
     init_ext(app)
 

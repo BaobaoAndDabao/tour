@@ -48,7 +48,7 @@ class Hotel(db.Model):
     score = db.Column(db.String(50))
     number = db.Column(db.String(50))
     address = db.Column(db.String(50))
-    Introduction = db.Column(db.Text)
+    introduction = db.Column(db.Text)
     pic = db.Column(db.Text)
 
     def to_json(self):
