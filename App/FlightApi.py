@@ -2,7 +2,7 @@ from flask import Blueprint, request,jsonify,make_response,session
 
 from App.common.ResData import ResData
 from App.ext import db
-from App.models import User, Flight
+from App.models import User, Flight, UserBuyRecord
 
 flightBlue =Blueprint("flight",__name__)
 
@@ -91,5 +91,27 @@ def delete():
         return ResData.paramEmpty(flightId)
     flight=Flight.query.filter(Flight.flightId==flightId).first()
     db.session.delete(flight)
+    db.session.commit()
+    return ResData.success(None)
+
+
+@flightBlue.route("/flight/buy",methods=["POST"])
+def buy():
+    userName = request.cookies.get('username')
+    if(userName is None):
+        return ResData.needLogin()
+    flightId=request.form.get('flightId')
+    if(flightId is None):
+        return ResData.paramEmpty(flightId)
+    flight=Flight.query.filter(Flight.flightId==flightId).first()
+    flight.number=flight.number - 1
+
+    userBuyRecord=UserBuyRecord()
+    userBuyRecord.productId =flightId
+    userBuyRecord.productType ="flight"
+    userBuyRecord.userName = userName
+
+    db.session.add(flight)
+    db.session.add(userBuyRecord)
     db.session.commit()
     return ResData.success(None)

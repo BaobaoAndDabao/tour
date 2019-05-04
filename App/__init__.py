@@ -2,7 +2,7 @@ from flask import Flask
 
 from App.FlightApi import init_flightBlue
 from App.HotelApi import init_hotelBlue
-from App.api import init_blue
+from App.UserApi import init_blue
 from App.ext import init_ext
 from App.settings import envs
 

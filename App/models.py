@@ -56,3 +56,19 @@ class Hotel(db.Model):
         if "_sa_instance_state" in dict:
             del dict["_sa_instance_state"]
         return dict
+
+
+
+class UserBuyRecord(db.Model):
+    __table__name = 'userBuyRecord'
+    Id = db.Column(db.Integer,primary_key=True)
+    productId = db.Column(db.String(50))
+    productType = db.Column(db.String(50))
+    userName = db.Column(db.String(50))
+
+
+    def to_json(self):
+        dict = self.__dict__
+        if "_sa_instance_state" in dict:
+            del dict["_sa_instance_state"]
+        return dict

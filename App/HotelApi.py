@@ -84,3 +84,26 @@ def delete():
     db.session.delete(hotel)
     db.session.commit()
     return ResData.success(None)
+
+
+
+@hotelBlue.route("/hotel/buy",methods=["POST"])
+def buy():
+    userName = request.cookies.get('username')
+    if(userName is None):
+        return ResData.needLogin()
+        hotelId=request.form.get('hotelId')
+    if(hotelId is None):
+        return ResData.paramEmpty(hotelId)
+    hotel=Hotel.query.filter(Hotel.hotelId==hotelId).first()
+    Hotel.number=Hotel.number - 1
+
+    userBuyRecord=UserBuyRecord()
+    userBuyRecord.productId =hotelId
+    userBuyRecord.productType ="hotel"
+    userBuyRecord.userName = userName
+
+    db.session.add(hotel)
+    db.session.add(userBuyRecord)
+    db.session.commit()
+    return ResData.success(None)

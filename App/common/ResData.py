@@ -13,4 +13,8 @@ class ResData():
         res = {"code": "0", "data": data}
         return jsonify(res)
 
+    def needLogin(self):
+        res = {"code": "1", "msg": "需要登录"}
+        return jsonify(res)
+
 
