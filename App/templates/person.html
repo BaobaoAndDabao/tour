@@ -1,0 +1,146 @@
+<!doctype html>
+<html  class="x-admin-sm">
+<head>
+    <meta charset="UTF-8">
+    <title>飞狗网</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="./lib/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="./asset/css/common.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <script type="text/javascript" src="./js/cookie.js"></script>
+    <script type="text/javascript" src="./js/vue.js"></script>
+    <script type="text/javascript" src="./main.js"></script>
+</head>
+
+<style type="text/css">
+
+  .user-head-info {
+    background: #283957;
+  }
+
+  .user-head-info .user-info .user-pic {
+    width: 148px;
+    height: 148px;
+  }
+
+  .user-head-info .user-info {
+    position: relative;
+    width: 1152px;
+    margin: 0 auto;
+  }
+
+  .user-head-info .user-info .user-pic .user-pic-bg {
+    border: 4px solid #fff;
+    box-shadow: 0 4px 8px 0 rgba(7,17,27,.1);
+    width: 148px;
+    height: 148px;
+    position: relative;
+    border-radius: 50%;
+    background: #fff;
+    top: 24px;
+  }
+
+  .user-head-info .user-info .user-pic .user-pic-bg .img {
+    text-align: center;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+  }
+
+  .user-tab-info {
+    padding: 20px 50px;
+  }
+
+  
+</style>
+<style type="text/css">
+  [v-cloak] {display: none;}
+</style>
+<body>
+  <div id="app">
+    <ul class="layui-nav layui-bg-blue" lay-filter="">
+      <li class="layui-nav-item"><a href="flyInfo.html">机票预定</a></li>
+      <li class="layui-nav-item"><a href="hotels.html">酒店预定</a></li>
+      <li class="layui-nav-item"><a href="scape.html">景点门票</a></li>
+      <li class="layui-nav-item"><a href="#/raiders">热门攻略</a></li>
+      <li class="layui-nav-item"><a href="">热门推荐</a></li>
+      <li class="layui-nav-item"><a href="post.html">社区交流</a></li>
+      <li class="layui-nav-item"><a href="">资源共享</a></li>
+      <li class="layui-nav-item  layui-this"><a href="">个人中心</a></li>
+    </ul>
+
+    <div class="main">
+      <div class="user-head-info">
+        <div class="user-info">
+          <div class="user-pic" data-is-fans="0" data-is-follows="">
+            <div class="user-pic-bg">
+              <img class="img" src="//img.mukewang.com/57bf09700001c20201000100-140-140.jpg" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="user-tab-info">
+         <table class="layui-table">
+          <colgroup>
+            <col width="200">
+            <col>
+          </colgroup>
+          <thead>
+            <tr>
+              <th>用户</th>
+              <th>{{useInfo.userName}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>昵称</td>
+              <td v-if="status == 'view'">{{useInfo.nickName}}</td>
+              <td v-else><input v-model="useInfo.nickName" name=""></td>
+            </tr>
+            <tr>
+              <td>密码</td>
+              <td v-if="status == 'view'">{{useInfo.password}}</td>
+              <td v-else><input v-model="useInfo.password" name=""></td>
+            </tr>
+            <tr>
+              <td>性别</td>
+              <td>{{useInfo.sex == 'male' ? '男' : '女'}}</td>
+            </tr>
+            <tr>
+              <td>地点</td>
+              <td v-if="status == 'view'">{{useInfo.location}}</td>
+              <td v-else><input v-model="useInfo.location" name=""></td>
+            </tr>
+
+            <tr>
+              <td>用户类型</td>
+              <td>{{useInfo.type == 'admin' ? '管理员' : '普通用户'}}</td>
+            </tr>
+
+            <tr>
+              <td></td>
+              <td>
+                <button class="layui-btn layui-btn-normal layui-btn-sm" @click="changeEdit">编辑</button>
+                <button class="layui-btn layui-btn-sm" @click="save">保存</button>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+ 
+<script>
+layui.use(['person']);
+
+</script>
+<!-- <script type="text/javascript" src="./asset/js/nav.html"></script> -->
+</body>
+</html>
