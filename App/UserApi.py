@@ -25,9 +25,9 @@ def login():
 
 @blue.route("/user/update",methods=["POST"])
 def update():
-    userName=request.cookies.get('username')
+    userName = request.cookies.get('userName')
     #userName=request.form.get('userName')
-    password=request.form.get('password')
+    password = request.form.get('password')
     nickName = request.form.get('nickName')
     sex = request.form.get('sex')
     location = request.form.get('location')
@@ -35,6 +35,8 @@ def update():
     type = request.form.get('type')
 
     user=User.query.filter(User.userName==userName).first()
+    if (user is None):
+        return ResData.fail()
     if(password is not None):
         user.password = password
     if (nickName is not None):

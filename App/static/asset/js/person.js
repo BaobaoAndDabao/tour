@@ -37,6 +37,7 @@ new Vue({
 				data: this.useInfo,
 				success: function(res) {
 					layer.msg('保存成功');
+					window.sessionStorage.setItem('useInfo', JSON.stringify(_this.useInfo));
 					_this.status = 'view';
 				}
 			})

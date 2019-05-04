@@ -4,9 +4,6 @@
 layui.define(function (exports) {
 
   function loadMap(fn) {
-    if (window.AMap) {
-      return fn(window.AMap);
-    }
     var script = document.createElement("script");
     script.type = "text/javascript";
     script.src = "https://webapi.amap.com/maps?v=1.4.8&key=a42f8fc982b7fcf299e5c4579ab2c419";
