@@ -12,7 +12,11 @@ function login() {
 	  //监听提交
 	  form.on('submit(login)', function(data){
 	    HTTP.ajax({
-	    	url: API.login,
+				url: API.login,
+				data: {
+					userName: '222',
+					password: '1334'
+				},
 	    	success: function(res) {
 	    		if (!isSuccess(res)) {
 	    			layer.msg('用户名或密码错误');

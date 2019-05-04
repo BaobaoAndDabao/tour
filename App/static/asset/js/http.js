@@ -8,7 +8,7 @@ function ajax(param) {
   return $.ajax({
     url: param.url,
     data: param.data,
-    type: 'post',
+    type: 'POST',
     dataType: "json",
     success: function(response) {
       if (response.code != 0) {

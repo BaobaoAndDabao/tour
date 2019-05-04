@@ -2,7 +2,7 @@ layui.define(function(exports){
 
 
 var publicAPI = {
-  login: '/mock/login.php',
+  login: '/user/login',
   updateUser: 'mock/updateUser.php',
   search: 'mock/search.php',
   searchHotel: 'mock/searchHotel.php'
