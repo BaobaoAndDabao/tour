@@ -14,6 +14,7 @@
   <script type="text/javascript" src="./static/lib/layui/layui.js" charset="utf-8"></script>
   <script type="text/javascript" src="./static/js/xadmin.js"></script>
   <script type="text/javascript" src="./static/js/cookie.js"></script>
+  <script type="text/javascript" src="./static/main.js"></script>
   <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
   <!--[if lt IE 9]>
       <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -28,64 +29,64 @@
       <div class="layui-form-item">
         <label class="layui-form-label">航班</label>
         <div class="layui-input-inline">
-          <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+          <input type="text" name="flightNumber" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
         </div>
       </div>
 
       <div class="layui-form-item">
         <label class="layui-form-label">航空公司</label>
         <div class="layui-input-inline">
-          <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+          <input type="text" name="flightName" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
         </div>
       </div>
 
       <div class="layui-form-item">
         <label class="layui-form-label">价格</label>
         <div class="layui-input-inline">
-          <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+          <input type="text" name="price" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
         </div>
       </div>
 
       <div class="layui-form-item">
         <label class="layui-form-label">票数</label>
         <div class="layui-input-inline">
-          <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+          <input type="text" name="number" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
         </div>
       </div>
 
       <div class="layui-form-item x-city" id="start">
         <label class="layui-form-label">出发地</label>
         <div class="layui-input-inline">
-          <select name="province" lay-filter="province">
+          <select name="startingPlace_province" lay-filter="province">
             <option value="">请选择省</option>
           </select>
         </div>
         <div class="layui-input-inline">
-          <select name="city" lay-filter="city">
+          <select name="startingPlace_city" lay-filter="city">
             <option value="">请选择市</option>
           </select>
         </div>
         <div class="layui-input-inline">
-          <select name="area" lay-filter="area">
+          <select name="startingPlace_area" lay-filter="area">
             <option value="">请选择县/区</option>
           </select>
         </div>
       </div>
-      
+
       <div class="layui-form-item x-city" id="end">
         <label class="layui-form-label">目的地</label>
         <div class="layui-input-inline">
-          <select name="province" lay-filter="province">
+          <select name="endPlace_province" lay-filter="province">
             <option value="">请选择省</option>
           </select>
         </div>
         <div class="layui-input-inline">
-          <select name="city" lay-filter="city">
+          <select name="endPlace_city" lay-filter="city">
             <option value="">请选择市</option>
           </select>
         </div>
         <div class="layui-input-inline">
-          <select name="area" lay-filter="area">
+          <select name="endPlace_area" lay-filter="area">
             <option value="">请选择县/区</option>
           </select>
         </div>
@@ -94,14 +95,14 @@
       <div class="layui-form-item">
         <label class="layui-form-label">开始时间</label>
         <div class="layui-input-inline">
-          <input type="text" id="startTime" class="layui-input" required lay-verify="required">
+          <input type="text" name="startTime" id="startTime" class="layui-input" required lay-verify="required">
         </div>
       </div>
 
       <div class="layui-form-item">
         <label class="layui-form-label">结束时间</label>
         <div class="layui-input-inline">
-          <input type="text" id="endTime" class="layui-input" required lay-verify="required">
+          <input type="text" name="endTime" id="endTime" class="layui-input" required lay-verify="required">
         </div>
       </div>
 
@@ -116,9 +117,11 @@
   <script type="text/javascript" src="./static/js/xcity.js"></script>
   <script>
     //Demo
-    layui.use(['form', 'laydate'], function () {
+    layui.use(['form', 'laydate', 'http', 'api'], function () {
       var form = window.form = layui.form;
       var laydate = layui.laydate;
+      var http = layui.http;
+      var api = layui.api;
 
       laydate.render({
         elem: '#startTime' //指定元素
@@ -132,52 +135,26 @@
       $('#end').xcity();
 
       //监听提交
-      form.on('submit(formDemo)', function (data) {
-        layer.msg(JSON.stringify(data.field));
+      form.on('submit(formDemo)', function (formData) {
+        var data = formData.field;
+        data.startingPlace = data.startingPlace_province + '-' + data.startingPlace_city + '-' + data.startingPlace_area;
+        data.endPlace = data.endPlace_province + '-' + data.endPlace_city + '-' + data.endPlace_area;
+        delete data.startingPlace_province;
+        delete data.startingPlace_city;
+        delete data.startingPlace_area;
+        delete data.endPlace_province;
+        delete data.endPlace_city;
+        delete data.endPlace_area;
+        http.ajax({
+          url: api.insertflight,
+          data: data,
+          success: function(res) {
+            layer.msg('新增成功');
+          }
+        });
         return false;
       });
     });
-  </script>
-  <script>
-    // layui.use(['form', 'layer'], function () {
-    //   $ = layui.jquery;
-    //   var form = layui.form,
-    //     layer = layui.layer;
-
-    //   //自定义验证规则
-    //   form.verify({
-    //     nikename: function (value) {
-    //       if (value.length < 5) {
-    //         return '昵称至少得5个字符啊';
-    //       }
-    //     },
-    //     pass: [/(.+){6,12}$/, '密码必须6到12位'],
-    //     repass: function (value) {
-    //       if ($('#L_pass').val() != $('#L_repass').val()) {
-    //         return '两次密码不一致';
-    //       }
-    //     }
-    //   });
-
-    //   //监听提交
-    //   form.on('submit(add)', function (data) {
-    //     console.log(data);
-    //     //发异步，把数据提交给php
-    //     layer.alert("增加成功", {
-    //       icon: 6
-    //     }, function () {
-    //       // 获得frame索引
-    //       var index = parent.layer.getFrameIndex(window.name);
-    //       //关闭当前frame
-    //       parent.layer.close(index);
-    //       // 可以对父窗口进行刷新 
-    //       x_admin_father_reload();
-    //     });
-    //     return false;
-    //   });
-
-
-    // });
   </script>
 </body>
 

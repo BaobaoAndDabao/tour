@@ -21,7 +21,8 @@ def search():
     startingPlace=request.form.get('startingPlace')
     endPlace=request.form.get('endPlace')
     startTime = request.form.get('startTime')
-    flights=User.query.filter(Flight.startingPlace==startingPlace,Flight.endPlace==endPlace,Flight.startTime==startTime).all()
+    flights = Flight.query.filter(Flight.startingPlace == startingPlace,
+                                  Flight.endPlace == endPlace, Flight.startTime == startTime).all()
     flightList=[]
     for one in flights:
         flightList.append(one.to_json())

@@ -4,8 +4,9 @@ layui.define(function(exports){
 var publicAPI = {
   login: '/user/login',
   updateUser: '/user/update',
-  search: 'mock/search.php',
-  searchHotel: 'mock/searchHotel.php'
+  searchFlight: '/flight/search',
+  searchHotel: 'mock/searchHotel.php',
+  insertflight: '/flight/insert'
 };
 
 

@@ -82,17 +82,17 @@
           <div class="layui-form-item x-city" id="start">
             <label class="layui-form-label">城市联动</label>
             <div class="layui-input-inline">
-              <select name="province" lay-filter="province">
+              <select name="startingPlace_province" lay-filter="province">
                 <option value="">请选择省</option>
               </select>
             </div>
             <div class="layui-input-inline">
-              <select name="city" lay-filter="city">
+              <select name="startingPlace_city" lay-filter="city">
                 <option value="">请选择市</option>
               </select>
             </div>
             <div class="layui-input-inline">
-              <select name="area" lay-filter="area">
+              <select name="startingPlace_area" lay-filter="area">
                 <option value="">请选择县/区</option>
               </select>
             </div>
@@ -101,17 +101,17 @@
           <div class="layui-form-item x-city" id="end">
             <label class="layui-form-label">城市联动</label>
             <div class="layui-input-inline">
-              <select name="province" lay-filter="province">
+              <select name="endPlace_province" lay-filter="province">
                 <option value="">请选择省</option>
               </select>
             </div>
             <div class="layui-input-inline">
-              <select name="city" lay-filter="city">
+              <select name="endPlace_city" lay-filter="city">
                 <option value="">请选择市</option>
               </select>
             </div>
             <div class="layui-input-inline">
-              <select name="area" lay-filter="area">
+              <select name="endPlace_area" lay-filter="area">
                 <option value="">请选择县/区</option>
               </select>
             </div>
@@ -120,7 +120,7 @@
           <div class="layui-form-item">
             <label class="layui-form-label">时间</label>
             <div class="layui-input-inline">
-              <input type="text" id="startTime" class="layui-input" required lay-verify="required">
+              <input type="text" name="startTime" id="startTime" class="layui-input" required lay-verify="required">
             </div>
           </div>
 
@@ -171,8 +171,8 @@
   <script>
     layui.use(['http', 'api', 'laydate', 'form', 'amap'], function () {
 
-      var HTTP = layui.http;
-      var API = layui.api;
+      var http = layui.http;
+      var api = layui.api;
       var laydate = layui.laydate;
       var form = window.form = layui.form;
       var amap = layui.amap;
@@ -201,9 +201,19 @@
       });
 
 
-      form.on('submit(searchFlys)', function (data) {
-        HTTP.ajax({
-          url: API.search,
+      form.on('submit(searchFlys)', function (formData) {
+        var data = formData.field;
+        data.startingPlace = data.startingPlace_province + '-' + data.startingPlace_city + '-' + data.startingPlace_area;
+        data.endPlace = data.endPlace_province + '-' + data.endPlace_city + '-' + data.endPlace_area;
+        delete data.startingPlace_province;
+        delete data.startingPlace_city;
+        delete data.startingPlace_area;
+        delete data.endPlace_province;
+        delete data.endPlace_city;
+        delete data.endPlace_area;
+        http.ajax({
+          url: api.searchFlight,
+          data: data,
           success: function (res) {
             var flights = res.flights;
             vm.flights = flights;
