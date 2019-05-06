@@ -10,11 +10,21 @@ def init_landscapeBlue(app):
     app.register_blueprint(blueprint=landscapeBlue)
 
 
+@landscapeBlue.route("/landscape/queryAll", methods=["POST", "GET"])
+def queryAll():
+    landscapes = Landscape.query.all()
+    landscapeList = []
+    for one in landscapes:
+        landscapeList.append(one.to_json())
+    landscapesJson = {"landscapes": landscapeList}
+    res = make_response(ResData.success(landscapesJson))
+    return res
 
 @landscapeBlue.route("/landscape/search",methods=["POST"])
 def search():
-    address=request.form.get('address')
-    landscapes=User.query.filter(Landscape.startingPlace==address).all()
+    address = request.form.get('address')
+    landscapes = Landscape.query.filter(
+        Landscape.address == address).all()
     landscapeList=[]
     for one in landscapes:
         landscapeList.append(one.to_json())

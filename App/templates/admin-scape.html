@@ -14,6 +14,7 @@
   <script type="text/javascript" src="./static/lib/layui/layui.js" charset="utf-8"></script>
   <script type="text/javascript" src="./static/js/xadmin.js"></script>
   <script type="text/javascript" src="./static/js/cookie.js"></script>
+  <script type="text/javascript" src="./static/main.js"></script>
   <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
   <!--[if lt IE 9]>
       <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -28,37 +29,37 @@
       <div class="layui-form-item">
         <label class="layui-form-label">景点名称</label>
         <div class="layui-input-inline">
-          <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+          <input type="text" name="landscapeName" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
         </div>
       </div>
 
       <div class="layui-form-item">
         <label class="layui-form-label">景点价格</label>
         <div class="layui-input-inline">
-          <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+          <input type="text" name="price" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
         </div>
       </div>
 
       <div class="layui-form-item">
         <label class="layui-form-label">景点评分</label>
         <div class="layui-input-inline">
-          <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+          <input type="text" name="score" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
         </div>
       </div>
 
       <div class="layui-form-item">
         <label class="layui-form-label">景点描述</label>
         <div class="layui-input-inline">
-          <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+          <input type="text" name="Introduction" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
         </div>
       </div>
 
-      <div class="layui-form-item">
+      <!-- <div class="layui-form-item">
         <label class="layui-form-label">景点描述</label>
         <div class="layui-input-inline">
-          <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+          <input type="text" name="pic" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
         </div>
-      </div>
+      </div> -->
 
       <div class="layui-form-item x-city" id="start">
         <label class="layui-form-label">景点地址</label>
@@ -90,58 +91,30 @@
   <script type="text/javascript" src="./static/js/xcity.js"></script>
   <script>
     //Demo
-    layui.use(['form'], function () {
+    layui.use(['form', 'http', 'api'], function () {
       var form = window.form = layui.form;
+      var http = layui.http;
+      var api = layui.api;
 
       $('#start').xcity();
 
       //监听提交
-      form.on('submit(formDemo)', function (data) {
-        layer.msg(JSON.stringify(data.field));
+      form.on('submit(formDemo)', function (formData) {
+        var data = formData.field;
+        data.address = data.province + '-' + data.city + '-' + data.area;
+        delete data.province;
+        delete data.city;
+        delete data.area;
+        http.ajax({
+          url: api.insertScape,
+          data: data,
+          success: function (res) {
+            layer.msg('新增成功');
+          }
+        });
         return false;
       });
     });
-  </script>
-  <script>
-    // layui.use(['form', 'layer'], function () {
-    //   $ = layui.jquery;
-    //   var form = layui.form,
-    //     layer = layui.layer;
-
-    //   //自定义验证规则
-    //   form.verify({
-    //     nikename: function (value) {
-    //       if (value.length < 5) {
-    //         return '昵称至少得5个字符啊';
-    //       }
-    //     },
-    //     pass: [/(.+){6,12}$/, '密码必须6到12位'],
-    //     repass: function (value) {
-    //       if ($('#L_pass').val() != $('#L_repass').val()) {
-    //         return '两次密码不一致';
-    //       }
-    //     }
-    //   });
-
-    //   //监听提交
-    //   form.on('submit(add)', function (data) {
-    //     console.log(data);
-    //     //发异步，把数据提交给php
-    //     layer.alert("增加成功", {
-    //       icon: 6
-    //     }, function () {
-    //       // 获得frame索引
-    //       var index = parent.layer.getFrameIndex(window.name);
-    //       //关闭当前frame
-    //       parent.layer.close(index);
-    //       // 可以对父窗口进行刷新 
-    //       x_admin_father_reload();
-    //     });
-    //     return false;
-    //   });
-
-
-    // });
   </script>
 </body>
 

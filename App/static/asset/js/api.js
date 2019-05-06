@@ -1,15 +1,16 @@
 layui.define(function(exports){
 
-
-var publicAPI = {
+exports('api', {
   login: '/user/login',
   updateUser: '/user/update',
   searchFlight: '/flight/search',
-  searchHotel: 'mock/searchHotel.php',
-  insertflight: '/flight/insert'
-};
-
-
-exports('api', publicAPI);
+  searchHotel: '/hotel/search',
+  searchLandscape: '/landscape/search',
+  insertflight: '/flight/insert',
+  insertHotel: '/hotel/insert',
+  insertScape: '/landscape/insert',
+  queryAllLandscape: '/landscape/queryAll',
+  queryAllHotel: '/hotel/queryAll'
+});
 
 }); 

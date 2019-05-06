@@ -10,6 +10,15 @@ def init_hotelBlue(app):
     app.register_blueprint(blueprint=hotelBlue)
 
 
+@hotelBlue.route("/hotel/queryAll", methods=["POST", "GET"])
+def queryAll():
+    hotels = Hotel.query.filter().all()
+    flightList = []
+    for one in hotels:
+        flightList.append(one.to_json())
+    flightsJson = {"hotels": flightList}
+    res = make_response(ResData.success(flightsJson))
+    return res
 
 @hotelBlue.route("/hotel/search",methods=["POST"])
 def search():

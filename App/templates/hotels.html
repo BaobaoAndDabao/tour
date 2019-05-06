@@ -98,12 +98,12 @@
             </div>
           </div>
 
-          <div class="layui-form-item">
+          <!-- <div class="layui-form-item">
             <label class="layui-form-label">时间</label>
             <div class="layui-input-inline">
-              <input type="text" id="startTime" class="layui-input" required lay-verify="required">
+              <input type="text" name="area" id="startTime" class="layui-input" required lay-verify="required">
             </div>
-          </div>
+          </div> -->
 
           <div class="layui-form-item">
             <button class="layui-btn layui-btn-normal" lay-submit lay-filter="searchFlys">搜索</button>
@@ -126,7 +126,7 @@
             <tr v-for="(info, index) in hotels">
               <td>{{info.hotelName}}</td>
               <td>{{info.address}}</td>
-              <td>{{info.Introduction}}</td>
+              <td>{{info.introduction}}</td>
               <td>
                 <div :id="'stars-' + index"></div>
               </td>
@@ -150,8 +150,8 @@
   <script>
     layui.use(['http', 'api', 'laydate', 'form', 'rate', 'amap'], function () {
 
-      var HTTP = layui.http;
-      var API = layui.api;
+      var http = layui.http;
+      var api = layui.api;
       var laydate = layui.laydate;
       var form = window.form = layui.form;
       var rate = layui.rate;
@@ -185,6 +185,14 @@
         methods: {},
         mounted: function () {
           getLocalCity();
+          http.ajax({
+            url: api.queryAllHotel,
+            success: function (res) {
+              var hotels = res.hotels;
+              vm.hotels = hotels;
+              setStars();
+            }
+          });
         }
       })
 
@@ -195,9 +203,15 @@
       });
 
 
-      form.on('submit(searchFlys)', function (data) {
-        HTTP.ajax({
-          url: API.searchHotel,
+      form.on('submit(searchFlys)', function (formData) {
+        var data = formData.field;
+        data.address = data.province + '-' + data.city + '-' + data.area;
+        delete data.province;
+        delete data.city;
+        delete data.area;
+        http.ajax({
+          url: api.searchHotel,
+          data: data,
           success: function (res) {
             var hotels = res.hotels;
             vm.hotels = hotels;
@@ -211,7 +225,6 @@
       function setStars() {
         setTimeout(function () {
           vm.hotels.forEach(function (item, index) {
-            console.log(item);
             rate.render({
               elem: '#stars-' + index,
               half: true,

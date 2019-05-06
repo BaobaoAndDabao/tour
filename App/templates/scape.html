@@ -106,30 +106,28 @@
         <table class="layui-table">
           <thead>
             <tr>
-              <th>酒店名称</th>
-              <th>地址</th>
-              <th>描述</th>
-              <th>评分</th>
-              <th>剩余</th>
-              <th>价格</th>
+              <th>景点名称</th>
+              <th>景点地址</th>
+              <th>景点描述</th>
+              <th>景点评分</th>
+              <th>景点价格</th>
               <th>操作</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(info, index) in hotels">
-              <td>{{info.hotelName}}</td>
+            <tr v-for="(info, index) in landscapes">
+              <td>{{info.landscapeName}}</td>
               <td>{{info.address}}</td>
               <td>{{info.Introduction}}</td>
               <td>
                 <div :id="'stars-' + index"></div>
               </td>
-              <td>{{info.number}}</td>
               <td>{{info.price}}</td>
               <td>
                 <button class="layui-btn layui-btn-sm">预定</button>
               </td>
             </tr>
-            <tr v-if="hotels.length == 0">
+            <tr v-if="landscapes.length == 0">
               <td colspan="7" style="text-align: center;">暂无数据</td>
             </tr>
           </tbody>
@@ -144,8 +142,8 @@
   <script>
     layui.use(['http', 'api', 'laydate', 'form', 'rate', 'amap'], function () {
 
-      var HTTP = layui.http;
-      var API = layui.api;
+      var http = layui.http;
+      var api = layui.api;
       var laydate = layui.laydate;
       var form = window.form = layui.form;
       var rate = layui.rate;
@@ -170,7 +168,7 @@
           startingPlace: '',
           endPlace: '',
           startTime: '',
-          hotels: []
+          landscapes: []
         },
         el: '#app',
         computed: {
@@ -178,7 +176,16 @@
         },
         methods: {},
         mounted: function () {
+          var _this = this;
           getLocalCity();
+          http.ajax({
+            url: api.queryAllLandscape,
+            success: function (res) {
+              var landscapes = res.landscapes;
+              _this.landscapes = landscapes;
+              setStars();
+            }
+          });
         }
       })
 
@@ -189,12 +196,18 @@
       });
 
 
-      form.on('submit(searchFlys)', function (data) {
-        HTTP.ajax({
-          url: API.searchHotel,
+      form.on('submit(searchFlys)', function (formData) {
+        var data = formData.field;
+        data.address = data.province + '-' + data.city + '-' + data.area;
+        delete data.province;
+        delete data.city;
+        delete data.area;
+        http.ajax({
+          url: api.searchLandscape,
+          data: data,
           success: function (res) {
-            var hotels = res.hotels;
-            vm.hotels = hotels;
+            var landscapes = res.landscapes;
+            vm.landscapes = landscapes;
             setStars();
           }
         });
@@ -204,7 +217,7 @@
 
       function setStars() {
         setTimeout(function () {
-          vm.hotels.forEach(function (item, index) {
+          vm.landscapes.forEach(function (item, index) {
             rate.render({
               elem: '#stars-' + index,
               half: true,
