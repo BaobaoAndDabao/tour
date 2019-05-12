@@ -158,6 +158,10 @@
         },
         mounted: function () {
           this.queryByUserCoupon();
+          var couponId = GetQueryString('couponId');
+          if (!couponId) {
+            return;
+          }
           http.ajax({
             url: api.getShareCoupon,
             data: {
