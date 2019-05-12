@@ -125,3 +125,16 @@ class Reply(db.Model):
         if "_sa_instance_state" in dict:
             del dict["_sa_instance_state"]
         return dict
+
+
+class Coupon(db.Model):
+    __table__name = 'coupon'
+    couponId = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50))
+    price = db.Column(db.String(50))
+
+    def to_json(self):
+        dict = self.__dict__
+        if "_sa_instance_state" in dict:
+            del dict["_sa_instance_state"]
+        return dict

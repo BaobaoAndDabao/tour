@@ -1,5 +1,6 @@
 from flask import Flask
 
+from App.CouponApi import init_couponBlue
 from App.FlightApi import init_flightBlue
 from App.HotelApi import init_hotelBlue
 from App.PostRecordApi import init_postRecordBlue
@@ -23,6 +24,7 @@ def create_app():
     init_landscapeBlue(app)
     init_recommendBlue(app)
     init_postRecordBlue(app)
+    init_couponBlue(app)
     init_ext(app)
 
     return app

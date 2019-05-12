@@ -78,3 +78,25 @@ def delete():
     db.session.commit()
     return ResData.success(None)
 
+#回复帖子
+@postRecordBlue.route("/postRecord/reply",methods=["POST"])
+def reply():
+    userName = request.cookies.get('username')
+    if(userName is None):
+        return ResData.needLogin(userName)
+
+    replyContent=request.form.get('replyContent')#回复内容
+    replyPostId = request.form.get('replyPostId')#回复帖子的id
+    postPic = request.form.get('postPic')#回复的图片
+    replyTime = Utils.getCurrentTimeStr("")
+
+    reply=Reply()
+    reply.replyBy = userName
+    reply.replyContent = replyContent
+    reply.replyPostId = replyPostId
+    reply.postPic = postPic
+    reply.replyTime = replyTime
+    db.session.add(reply)
+    db.session.commit()
+    return ResData.success(None)
+
