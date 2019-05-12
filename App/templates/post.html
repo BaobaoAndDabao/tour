@@ -60,9 +60,18 @@
   .ope{
     float:right;
   }
-  .list:hover{
+  .list:hover {
     cursor:hand;
     background:#e6e6e6;
+  }
+  .postContent {
+    height: 30px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap
+  }
+  .postContent-body {
+    cursor: pointer;
   }
 </style>
 
@@ -106,121 +115,69 @@
     
     <div class="main"></div>
       <div class="user-tab-info">
-        <div class='list'>
-          <h1>
-            <a href='./content.html'>js断点续传</a>
-          </h1>
-          <p>
-            <a href='/content.html'>js 断点续传 1. js断点续断点续传 1. js断点续传的思路 对于一个大文件， 可以将其切割成适当的小文件，提交给后台断点续传 1. js断点续传的思路 对于一个大文件， 可以将其切割成适当的小文件，提交给后台断点续传 1. js断点续传的思路
-              对于一个大文件 ，可以将其切割成适当的小文件，提交给后台断点续传 1. js断点续传的思路 对于一个大文件， 可以将其切割成适当的小文件，提交给后台断点续传 1. js断点续传的思路 对于一个大文件，可以 将其切割成适当的小文件，提交给后台断点续传
-              1. js断点续传的思路 对于一个大文件，可以将 其切割成适当的小文件，提交给后台断点续传 1. js断点续传的思路 对于一个大文件，可以将其切 割成适当的小文件，提交给后台断点续传 1. js断点续传的思路 对于一个大文件，可以将其切割成适当
-              的小文件，提交给后台传的思路 对于一个大文件，可以将其切割成适当的小文件，提交给后台，再由 后台合并成大文件。 这样做法的好处有： （1）化整为零，可以防止文件上传中断而导致整个文件都 需要重新上传的杯具问题。 （2）分成小文件，可以利用ajax的多线程，同时提交多个小文件，从而提
-              升上
-            </a>
-          </p>
-          <div>
-            <span>2019-5-11 14:49</span>
-            <span>|</span>
-            <span>阅读数：</span>
-            <span class='list-foot'>0</span>
-            <span>|</span>
-            <span>评论数：</span>
-            <span class='list-foot'>0</span>
-          </div>
-          <div class="ope">
-            <a href="">删除</a>
-          </div>
+        
+
+        <div class="clearfix" style="height: 50px;">
+          <button @click="addpost" class="layui-btn layui-btn-normal layui-btn-radius floatRight">新建文章</button>
         </div>
-        <div class='list'>
-          <h1>
-            <a href='./content.html'>js断点续传</a>
-          </h1>
-          <p>
-            <a href='/content.html'>js 断点续传 1. js断点续断点续传 1. js断点续传的思路 对于一个大文件， 可以将其切割成适当的小文件，提交给后台断点续传 1. js断点续传的思路 对于一个大文件， 可以将其切割成适当的小文件，提交给后台断点续传 1. js断点续传的思路
-              对于一个大文件 ，可以将其切割成适当的小文件，提交给后台断点续传 1. js断点续传的思路 对于一个大文件， 可以将其切割成适当的小文件，提交给后台断点续传 1. js断点续传的思路 对于一个大文件，可以 将其切割成适当的小文件，提交给后台断点续传
-              1. js断点续传的思路 对于一个大文件，可以将 其切割成适当的小文件，提交给后台断点续传 1. js断点续传的思路 对于一个大文件，可以将其切 割成适当的小文件，提交给后台断点续传 1. js断点续传的思路 对于一个大文件，可以将其切割成适当
-              的小文件，提交给后台传的思路 对于一个大文件，可以将其切割成适当的小文件，提交给后台，再由 后台合并成大文件。 这样做法的好处有： （1）化整为零，可以防止文件上传中断而导致整个文件都 需要重新上传的杯具问题。 （2）分成小文件，可以利用ajax的多线程，同时提交多个小文件，从而提
-              升上
-            </a>
-          </p>
-          <div>
-            <span>2019-5-11 14:49</span>
-            <span>|</span>
-            <span>阅读数：</span>
-            <span class='list-foot'>0</span>
-            <span>|</span>
-            <span>评论数：</span>
-            <span class='list-foot'>0</span>
-          </div>
-          <div class="ope">
-            <a href="">删除</a>
+        <div style="padding: 20px; background-color: #F2F2F2;" >
+          <div class="layui-row layui-col-space15">
+            <div class="layui-col-md6" v-for="postRecord in postRecords">
+              <div class="layui-card">
+                <div class="layui-card-header">
+                  <!-- <i class="layui-icon"></i>   -->
+                   {{postRecord.postTitle}}
+                </div>
+                <div class="layui-card-body postContent-body" @click="gotDetail(postRecord)">
+                  <div class="postContent">{{postRecord.postContent}}</div>
+                  <br> {{postRecord.postTime}}
+                  阅读数：{{0}}
+                  评论数：{{postRecord.replyCount}}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="stars"></div>
   </div>
   {% endraw %}
   <script>
     layui.use(['http', 'api', 'laydate', 'form', 'rate'], function () {
 
-      var HTTP = layui.http;
-      var API = layui.api;
-      var laydate = layui.laydate;
-      var form = layui.form;
-      var rate = layui.rate;
-
-
+      var http = layui.http;
+      var api = layui.api;
 
       var vm = new Vue({
         data: {
           startingPlace: '',
           endPlace: '',
           startTime: '',
-          hotels: []
+          postRecords: []
         },
         el: '#app',
         computed: {
 
         },
-        methods: {}
-      })
-
-
-      //执行一个laydate实例
-      laydate.render({
-        elem: '#startTime' //指定元素
-      });
-
-
-      form.on('submit(searchFlys)', function (data) {
-        HTTP.ajax({
-          url: API.searchHotel,
-          success: function (res) {
-            var hotels = res.hotels;
-            vm.hotels = hotels;
-            setStars();
+        methods: {
+          addpost: function() {
+            window.location.href = 'add-post.html';
+          },
+          gotDetail: function(postRecord) {
+            console.log(postRecord.postId);
+            window.location.href = 'content.html?postRecordId='+ postRecord.postId;
           }
-        });
-        return false;
-      });
-
-
-      function setStars() {
-        setTimeout(function () {
-          vm.hotels.forEach(function (item, index) {
-            console.log(item);
-            rate.render({
-              elem: '#stars-' + index,
-              half: true,
-              value: Number(item.score),
-              readonly: true
-            });
-          });
-        });
-      }
-
-
+        },
+        mounted: function() {
+          http.ajax({
+            url: api.queryAllPostRecord,
+            success: function(res) {
+              console.log(res);
+              vm.postRecords = res.postRecords;
+            }
+          })
+        },
+      })
 
     });
   </script>

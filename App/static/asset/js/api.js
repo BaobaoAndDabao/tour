@@ -14,7 +14,10 @@ exports('api', {
   queryAllFlight: '/flight/queryAll',
   buyFlight: '/flight/buy',
   sendRecommend: '/recommend/send',
-  raidersRecommend: '/recommend/raiders'
+  raidersRecommend: '/recommend/raiders',
+  queryAllPostRecord: '/postRecord/queryAll',
+  queryByPostRecordId: '/postRecord/queryByPostRecordId',
+  insertPostRecord: '/postRecord/insert'
 });
 
 }); 

@@ -100,14 +100,14 @@ def delete():
 def buy():
     userName = request.cookies.get('username')
     if(userName is None):
-        return ResData.needLogin()
+        return ResData.needLogin(userName)
         hotelId=request.form.get('hotelId')
     if(hotelId is None):
         return ResData.paramEmpty(hotelId)
     hotel=Hotel.query.filter(Hotel.hotelId==hotelId).first()
     Hotel.number=Hotel.number - 1
 
-    userBuyRecord=UserBuyRecord()
+    userBuyRecord= UserBuyRecord()
     userBuyRecord.productId =hotelId
     userBuyRecord.productType ="hotel"
     userBuyRecord.userName = userName

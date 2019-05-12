@@ -11,7 +11,7 @@ def init_flightBlue(app):
     app.register_blueprint(blueprint=flightBlue)
 
 
-@flightBlue.route("/flight/createTable", methods=["POST"])
+@flightBlue.route("/flight/createTable", methods=["POST", "GET"])
 def createTable():
     db.drop_all()
     db.create_all()

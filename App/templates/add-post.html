@@ -90,24 +90,16 @@
     
     <div class="main"></div>
       <div class="user-tab-info">
-        <!-- <button class="layui-btn" @click="back"><i class="layui-icon"></i>返回</button> -->
-        <h3 class="postTitle">{{content.postTitle}}</h3>
-        <pre class="layui-code" lay-title="JavaScript" lay-skin="notepad">{{content.postContent}}</pre>
+        <h3 class="postTitle" id="postTitle" contenteditable="true">{{content.postTitle}}</h3>
+        
+        <pre class="layui-code" id="postContent" contenteditable="true" lay-title="JavaScript" lay-skin="notepad">{{content.postContent}}</pre>
 
-        <blockquote class="layui-elem-quote postTitle">评论列表</blockquote>
 
-        <form class="layui-form layui-col-md12  layui-form-pane">
-          <div class="layui-form-item">
-            <!-- <label class="layui-form-label">评论</label> -->
-            <div class="layui-input-inline">
-              <input type="text" name="title" required lay-verify="required" placeholder="输入评论内容" autocomplete="off" class="layui-input">
-            </div>
-          </div>
-          <button class="layui-btn" onclick="review()">提交</button>
-        </form>
+        <div class="layui-form layui-col-md12  layui-form-pane">
+          <button class="layui-btn" @click="commit">提交</button>
+        </div>
       </div>
     </div>
-    <div class="stars"></div>
   </div>
   {% endraw %}
   <script>
@@ -118,12 +110,6 @@
       var laydate = layui.laydate;
       var form = layui.form;
       var rate = layui.rate;
-
-      function GetQueryString(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]); return null;
-      }
 
 
 
@@ -138,16 +124,30 @@
         methods: {
           back: function() {
             window.location.href = 'post.html';
+          },
+          commit: function() {
+            http.ajax({
+              url: api.insertPostRecord,
+              data: {
+                postContent: $("#postContent").text(),
+                postTitle: $("#postTitle").text()
+              },
+              success: function (res) {
+                layer.msg('发表成功');
+                setTimeout(function() {
+                  window.location.href = 'post.html';
+                }, 500);
+              }
+            })
           }
         },
         mounted: function() {
           http.ajax({
             url: api.queryByPostRecordId,
             data: {
-              postRecordId: GetQueryString('postRecordId')
+              postRecordId: 1
             },
             success: function(res) {
-              // console.log(res);
               vm.content = res;
             }
           })
@@ -159,15 +159,3 @@
 </body>
 
 </html>
-
-<script>
-  function review(){
-    var msg = $('[name="title"]').val();
-    if(msg == ''){
-      layer.msg('评论不能为空');
-      return;
-    }
-    $('[name="title"]').val('');
-    $('.content').append("<div class='msg'>"+ msg +"</div><div>2019-5-11</div>");
-  }
-</script>

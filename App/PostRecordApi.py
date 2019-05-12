@@ -17,7 +17,7 @@ def queryAll():
     postRecordList = []
     for one in postRecords:
         count=querReplyCountByPostRecordId(one.postId)
-        post=one.to_json();
+        post=one.to_json()
         post['replyCount']=count
         postRecordList.append(post)
     postRecordsJson = {"postRecords": postRecordList}
@@ -49,9 +49,9 @@ def queryByPostRecordId():
 
 @postRecordBlue.route("/postRecord/insert",methods=["POST"])
 def insert():
-    userName = request.cookies.get('username')
+    userName = request.cookies.get('userName')
     if(userName is None):
-        return ResData.needLogin()
+        return ResData.needLogin(userName)
     postContent=request.form.get('postContent')
     postTitle = request.form.get('postTitle')
     postPic = request.form.get('postPic')
