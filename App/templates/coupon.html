@@ -86,8 +86,8 @@
 
     <div class="main">
       <div class="user-tab-info">
-        <blockquote class="layui-elem-quote" v-if="coupons.length"> 我的优惠券</blockquote>
-        <div  v-if="coupons.length" style="padding: 20px; background-color: #F2F2F2;">
+        <blockquote class="layui-elem-quote"> 我的优惠券</blockquote>
+        <div v-if="coupons.length" style="padding: 20px; background-color: #F2F2F2;">
           <div class="layui-row layui-col-space15">
             <div class="layui-col-md3" v-for="coupon in coupons">
               <div class="layui-card">
@@ -101,7 +101,10 @@
             </div>
           </div>
         </div>
-        <blockquote v-if="flights.length" class="layui-elem-quote"> 我的机票</blockquote>
+        <div v-else>
+           暂无数据
+        </div>
+        <blockquote class="layui-elem-quote"> 我的机票</blockquote>
         <div v-if="flights.length" style="padding: 20px; background-color: #F2F2F2;">
           <div class="layui-row layui-col-space15">
             <div class="layui-col-md3" v-for="flight in flights">
@@ -117,8 +120,11 @@
             </div>
           </div>
         </div>
+        <div v-else>
+          暂无数据
+        </div>
 
-        <blockquote v-if="hotels.length" class="layui-elem-quote"> 我的酒店</blockquote>
+        <blockquote class="layui-elem-quote"> 我的酒店</blockquote>
         <div v-if="hotels.length" style="padding: 20px; background-color: #F2F2F2;">
           <div class="layui-row layui-col-space15">
             <div class="layui-col-md3" v-for="hotel in hotels">
@@ -133,8 +139,11 @@
             </div>
           </div>
         </div>
+        <div v-else>
+          暂无数据
+        </div>
 
-        <blockquote v-if="landscapes.length" class="layui-elem-quote"> 我的门票</blockquote>
+        <blockquote class="layui-elem-quote"> 我的门票</blockquote>
         <div v-if="landscapes.length" style="padding: 20px; background-color: #F2F2F2;">
           <div class="layui-row layui-col-space15">
             <div class="layui-col-md3" v-for="landscape in landscapes">
@@ -148,6 +157,9 @@
               </div>
             </div>
           </div>
+        </div>
+        <div v-else>
+          暂无数据
         </div>
       </div>
     </div>
