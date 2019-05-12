@@ -17,9 +17,9 @@ function ajax(param) {
     dataType: "json",
     contentType: "application/x-www-form-urlencoded;charset=UTF-8",
     success: function(response) {
-      if (response.code != 0) {
+      if (response.code == 1) {
         layer.msg('请求失败,稍后再试');
-      } else {
+      } else if (response.code == 0) {
         param.success(response.data);
       }
     }
