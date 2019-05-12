@@ -46,7 +46,7 @@
         <li class="layui-nav-item">
           <a href="flyInfo.html">机票预定</a>
         </li>
-        <li class="layui-nav-item layui-this">
+        <li class="layui-nav-item">
           <a href="hotels.html">酒店预定</a>
         </li>
         <li class="layui-nav-item">
@@ -55,8 +55,8 @@
         <li class="layui-nav-item">
           <a href="raiders.html">热门攻略</a>
         </li>
-        <li class="layui-nav-item">
-          <a href="recommend.html">热门推荐</a>
+        <li class="layui-nav-item layui-this">
+          <a href="">热门推荐</a>
         </li>
         <li class="layui-nav-item">
           <a href="post.html">社区交流</a>
@@ -77,66 +77,32 @@
 
     <div class="main">
       <div class="user-tab-info">
-
-        <form class="layui-form layui-col-md12  layui-form-pane">
-          <div class="layui-form-item x-city" id="start">
-            <label class="layui-form-label">城市联动</label>
-            <div class="layui-input-inline">
-              <select name="province" lay-filter="province">
-                <option value="">请选择省</option>
-              </select>
-            </div>
-            <div class="layui-input-inline">
-              <select name="city" lay-filter="city">
-                <option value="">请选择市</option>
-              </select>
-            </div>
-            <div class="layui-input-inline">
-              <select name="area" lay-filter="area">
-                <option value="">请选择县/区</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- <div class="layui-form-item">
-            <label class="layui-form-label">时间</label>
-            <div class="layui-input-inline">
-              <input type="text" name="area" id="startTime" class="layui-input" required lay-verify="required">
-            </div>
-          </div> -->
-
-          <div class="layui-form-item">
-            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="searchFlys">搜索</button>
-          </div>
-        </form>
-
+        <blockquote class="layui-elem-quote"> 为您推荐下面旅游景点</blockquote>
         <table class="layui-table">
           <thead>
             <tr>
-              <th>酒店名称</th>
-              <th>地址</th>
-              <th>描述</th>
-              <th>评分</th>
-              <th>剩余</th>
-              <th>价格</th>
+              <th>景点名称</th>
+              <th>景点地址</th>
+              <th>景点描述</th>
+              <th>景点评分</th>
+              <th>景点价格</th>
               <th>操作</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(info, index) in hotels">
-              <td>{{info.hotelName}}</td>
+            <tr v-for="(info, index) in landscapes">
+              <td>{{info.landscapeName}}</td>
               <td>{{info.address}}</td>
-              <td>{{info.introduction}}</td>
+              <td>{{info.Introduction}}</td>
               <td>
                 <div :id="'stars-' + index"></div>
               </td>
-              <td>{{info.number}}</td>
               <td>{{info.price}}</td>
               <td>
                 <button class="layui-btn layui-btn-sm">预定</button>
               </td>
             </tr>
-            <tr v-if="hotels.length == 0">
+            <tr v-if="landscapes.length == 0">
               <td colspan="7" style="text-align: center;">暂无数据</td>
             </tr>
           </tbody>
@@ -146,6 +112,7 @@
     <div class="stars"></div>
   </div>
    {% endraw %}
+
   <script type="text/javascript" src="./static/js/xcity.js"></script>
   <script>
     layui.use(['http', 'api', 'laydate', 'form', 'rate', 'amap'], function () {
@@ -176,7 +143,7 @@
           startingPlace: '',
           endPlace: '',
           startTime: '',
-          hotels: []
+          landscapes: []
         },
         el: '#app',
         computed: {
@@ -184,12 +151,13 @@
         },
         methods: {},
         mounted: function () {
+          var _this = this;
           getLocalCity();
           http.ajax({
-            url: api.queryAllHotel,
+            url: api.sendRecommend,
             success: function (res) {
-              var hotels = res.hotels;
-              vm.hotels = hotels;
+              var landscapes = res.landscapes;
+              _this.landscapes = landscapes;
               setStars();
             }
           });
@@ -197,34 +165,9 @@
       })
 
 
-      //执行一个laydate实例
-      laydate.render({
-        elem: '#startTime' //指定元素
-      });
-
-
-      form.on('submit(searchFlys)', function (formData) {
-        var data = formData.field;
-        data.address = data.province + '-' + data.city + '-' + data.area;
-        delete data.province;
-        delete data.city;
-        delete data.area;
-        http.ajax({
-          url: api.searchHotel,
-          data: data,
-          success: function (res) {
-            var hotels = res.hotels;
-            vm.hotels = hotels;
-            setStars();
-          }
-        });
-        return false;
-      });
-
-
       function setStars() {
         setTimeout(function () {
-          vm.hotels.forEach(function (item, index) {
+          vm.landscapes.forEach(function (item, index) {
             rate.render({
               elem: '#stars-' + index,
               half: true,

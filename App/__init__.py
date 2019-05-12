@@ -5,6 +5,7 @@ from App.HotelApi import init_hotelBlue
 from App.web import init_webBlue
 from App.LandscapeApi import init_landscapeBlue
 from App.UserApi import init_blue
+from App.recommend import init_recommendBlue
 from App.ext import init_ext
 from App.settings import envs
 
@@ -19,6 +20,7 @@ def create_app():
     init_hotelBlue(app)
     init_webBlue(app)
     init_landscapeBlue(app)
+    init_recommendBlue(app)
 
     init_ext(app)
 

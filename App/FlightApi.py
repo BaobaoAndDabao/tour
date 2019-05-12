@@ -1,10 +1,11 @@
-from flask import Blueprint, request,jsonify,make_response,session
+from flask import Blueprint, request, jsonify, make_response, session
 
 from App.common.ResData import ResData
 from App.ext import db
 from App.models import User, Flight, UserBuyRecord
 
-flightBlue =Blueprint("flight",__name__)
+flightBlue = Blueprint("flight", __name__)
+
 
 def init_flightBlue(app):
     app.register_blueprint(blueprint=flightBlue)
@@ -28,29 +29,29 @@ def queryAll():
     return res
 
 
-
-@flightBlue.route("/flight/search",methods=["POST"])
+@flightBlue.route("/flight/search", methods=["POST"])
 def search():
-    startingPlace=request.form.get('startingPlace')
-    endPlace=request.form.get('endPlace')
+    startingPlace = request.form.get('startingPlace')
+    endPlace = request.form.get('endPlace')
     startTime = request.form.get('startTime')
     flights = Flight.query.filter(Flight.startingPlace == startingPlace,
                                   Flight.endPlace == endPlace, Flight.startTime == startTime).all()
-    flightList=[]
+    flightList = []
     for one in flights:
         flightList.append(one.to_json())
-    flightsJson ={"flights":flightList}
-    res= make_response(ResData.success(flightsJson))
+    flightsJson = {"flights": flightList}
+    res = make_response(ResData.success(flightsJson))
     return res
 
-@flightBlue.route("/flight/update",methods=["POST"])
+
+@flightBlue.route("/flight/update", methods=["POST"])
 def update():
-    flightId=request.form.get("flightId")
+    flightId = request.form.get("flightId")
     if(flightId is None):
         return ResData.paramEmpty(flightId)
-    flight=Flight.query.filter(Flight.flightId==flightId).first()
+    flight = Flight.query.filter(Flight.flightId == flightId).first()
 
-    startingPlace=request.form.get('startingPlace')
+    startingPlace = request.form.get('startingPlace')
     endPlace = request.form.get('endPlace')
     startTime = request.form.get('startTime')
     endTime = request.form.get('endTime')
@@ -73,10 +74,9 @@ def update():
     return ResData.success(None)
 
 
-
-@flightBlue.route("/flight/insert",methods=["POST"])
+@flightBlue.route("/flight/insert", methods=["POST"])
 def insert():
-    startingPlace=request.form.get('startingPlace')
+    startingPlace = request.form.get('startingPlace')
     endPlace = request.form.get('endPlace')
     startTime = request.form.get('startTime')
     endTime = request.form.get('endTime')
@@ -84,7 +84,7 @@ def insert():
     price = request.form.get('price')
     flightName = request.form.get('flightName')
     number = request.form.get('number')
-    flight=Flight()
+    flight = Flight()
     flight.startingPlace = startingPlace
     flight.endPlace = endPlace
     flight.startTime = startTime
@@ -98,18 +98,18 @@ def insert():
     return ResData.success(None)
 
 
-@flightBlue.route("/flight/delete",methods=["POST"])
+@flightBlue.route("/flight/delete", methods=["POST"])
 def delete():
-    flightId=request.form.get('flightId')
+    flightId = request.form.get('flightId')
     if(flightId is None):
         return ResData.paramEmpty(flightId)
-    flight=Flight.query.filter(Flight.flightId==flightId).first()
+    flight = Flight.query.filter(Flight.flightId == flightId).first()
     db.session.delete(flight)
     db.session.commit()
     return ResData.success(None)
 
 
-@flightBlue.route("/flight/buy",methods=["POST"])
+@flightBlue.route("/flight/buy", methods=["POST"])
 def buy():
     flightId = request.form.get('flightId')
     userName = request.cookies.get('username')
@@ -117,12 +117,12 @@ def buy():
         return ResData.needLogin(flightId)
     if(flightId is None):
         return ResData.paramEmpty(flightId)
-    flight=Flight.query.filter(Flight.flightId==flightId).first()
+    flight = Flight.query.filter(Flight.flightId == flightId).first()
     flight.number = flight.number - 1
 
     userBuyRecord = UserBuyRecord()
     userBuyRecord.productId = flightId
-    userBuyRecord.productType ="flight"
+    userBuyRecord.productType = "flight"
     userBuyRecord.userName = userName
 
     db.session.add(flight)

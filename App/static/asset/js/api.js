@@ -12,7 +12,9 @@ exports('api', {
   queryAllLandscape: '/landscape/queryAll',
   queryAllHotel: '/hotel/queryAll',
   queryAllFlight: '/flight/queryAll',
-  buyFlight: '/flight/buy'
+  buyFlight: '/flight/buy',
+  sendRecommend: '/recommend/send',
+  raidersRecommend: '/recommend/raiders'
 });
 
 }); 

@@ -13,10 +13,10 @@ def init_hotelBlue(app):
 @hotelBlue.route("/hotel/queryAll", methods=["POST", "GET"])
 def queryAll():
     hotels = Hotel.query.filter().all()
-    flightList = []
+    hotellist = []
     for one in hotels:
-        flightList.append(one.to_json())
-    flightsJson = {"hotels": flightList}
+        hotellist.append(one.to_json())
+    flightsJson = {"hotels": hotellist}
     res = make_response(ResData.success(flightsJson))
     return res
 

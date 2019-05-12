@@ -15,7 +15,7 @@ def login():
     password=request.form.get('password')
     user=User.query.filter(User.userName==userName,User.password==password).first()
     if(user is None):
-        return ResData.fail()
+        return ResData.fail(userName)
     res= make_response(ResData.success(user.to_json()))
     res.set_cookie('userName', userName)
     return res
