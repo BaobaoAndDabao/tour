@@ -1,0 +1,186 @@
+<!doctype html>
+<html class="x-admin-sm">
+
+<head>
+  <meta charset="UTF-8">
+  <title>飞狗网</title>
+  <meta name="renderer" content="webkit|ie-comp|ie-stand">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"
+  />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="stylesheet" type="text/css" href="./static/lib/layui/css/layui.css">
+  <link rel="stylesheet" type="text/css" href="./static/asset/css/common.css">
+  <link rel="stylesheet" href="./static/css/font.css">
+  <link rel="stylesheet" href="./static/css/xadmin.css">
+  <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="./static/lib/layui/layui.js" charset="utf-8"></script>
+  <script type="text/javascript" src="./static/js/xadmin.js"></script>
+  <script type="text/javascript" src="./static/js/cookie.js"></script>
+  <script type="text/javascript" src="./static/js/vue.js"></script>
+  <script type="text/javascript" src="./static/main.js"></script>
+</head>
+
+<style type="text/css">
+  .user-tab-info {
+    padding: 20px 50px;
+  }
+
+  .layui-form-item {
+    margin-bottom: 15px;
+    float: left;
+    clear: unset !important;
+  }
+</style>
+<style type="text/css">
+  [v-cloak] {
+    display: none;
+  }
+</style>
+<style>
+  p{
+    margin-bottom: 20px;
+  }
+  
+</style>
+
+
+<body>
+  {% raw %}
+  <div id="app" v-cloak>
+    <div class="container" style="background-color: #1e9fff;">
+      <ul class="layui-nav layui-bg-blue left" lay-filter="">
+        <li class="layui-nav-item">
+          <a href="flyInfo.html">机票预定</a>
+        </li>
+        <li class="layui-nav-item">
+          <a href="hotels.html">酒店预定</a>
+        </li>
+        <li class="layui-nav-item">
+          <a href="scape.html">景点门票</a>
+        </li>
+        <li class="layui-nav-item">
+          <a href="#/raiders">热门攻略</a>
+        </li>
+        <li class="layui-nav-item">
+          <a href="">热门推荐</a>
+        </li>
+        <li class="layui-nav-item layui-this">
+          <a href="post.html">社区交流</a>
+        </li>
+        <li class="layui-nav-item">
+          <a href="">资源共享</a>
+        </li>
+      </ul>
+      <ul class="layui-nav layui-bg-blue right" lay-filter="">
+        <li class="layui-nav-item">
+          <a href="login.html">退出</a>
+        </li>
+        <li class="layui-nav-item">
+          <a href="person.html">个人中心</a>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="main"></div>
+      <div class="user-tab-info">
+        <h1>标题</h1>
+        <p>接口说明： 此接口用于上传文件切片，file参数是文件切片的内容。后台在保存的时候，可以将同一个文件的切片保存到一个文件夹下，所以原文件名称是可能需求的参数。为了保证切片的唯一性，id作为文件签名是必须的。由于并发的提交，为了保证文件切片的顺序，所以要加上index。
+        注意：后台在记录文件签名的时候，是可以采用多种方法记录的。但是一定要考虑文件的并发提交对数据存储和查询的影响。 --------------------- 作者：三和小钢炮 来源：CSDN 原文：https://blog.csdn.net/fwx426328/article/details/83655093
+        版权声明：本文为博主原创文章，转载请附上博文链接！接口说明： 此接口用于上传文件切片，file参数是文件切片的内容。后台在保存的时候，可以将同一个文件的切片保存到一个文件夹下，所以原文件名称是可能需求的参数。为了保证切片的唯一性，id作为文件签名是必须的。由于并发的提交，为了保证文件切片的顺序，所以要加上index。
+        注意：后台在记录文件签名的时候，是可以采用多种方法记录的。但是一定要考虑文件的并发提交对数据存储和查询的影响。 --------------------- 作者：三和小钢炮 来源：CSDN 原文：https://blog.csdn.net/fwx426328/article/details/83655093
+        版权声明：本文为博主原创文章，转载请附上博文链接！接口说明： 此接口用于上传文件切片，file参数是文件切片的内容。后台在保存的时候，可以将同一个文件的切片保存到一个文件夹下，所以原文件名称是可能需求的参数。为了保证切片的唯一性，id作为文件签名是必须的。由于并发的提交，为了保证文件切片的顺序，所以要加上index。
+        注意：后台在记录文件签名的时候，是可以采用多种方法记录的。但是一定要考虑文件的并发提交对数据存储和查询的影响。 --------------------- 作者：三和小钢炮 来源：CSDN 原文：https://blog.csdn.net/fwx426328/article/details/83655093
+        版权声明：本文为博主原创文章，转载请附上博文链接！接口说明： 此接口用于上传文件切片，file参数是文件切片的内容。后台在保存的时候，可以将同一个文件的切片保存到一个文件夹下，所以原文件名称是可能需求的参数。为了保证切片的唯一性，id作为文件签名是必须的。由于并发的提交，为了保证文件切片的顺序，所以要加上index。
+        注意：后台在记录文件签名的时候，是可以采用多种方法记录的。但是一定要考虑文件的并发提交对数据存储和查询的影响。 --------------------- 作者：三和小钢炮 来源：CSDN 原文：https://blog.csdn.net/fwx426328/article/details/83655093
+        版权声明：本文为博主原创文章，转载请附上博文链接！接口说明： 此接口用于上传文件切片，file参数是文件切片的内容。后台在保存的时候，可以将同一个文件的切片保存到一个文件夹下，所以原文件名称是可能需求的参数。为了保证切片的唯一性，id作为文件签名是必须的。由于并发的提交，为了保证文件切片的顺序，所以要加上index。
+        注意：后台在记录文件签名的时候，是可以采用多种方法记录的。但是一定要考虑文件的并发提交对数据存储和查询的影响。 --------------------- 作者：三和小钢炮 来源：CSDN 原文：https://blog.csdn.net/fwx426328/article/details/83655093
+        版权声明：本文为博主原创文章，转载请附上博文链接！</p>
+        <input type="text" name="title" required lay-verify="required" placeholder="输入评论内容" autocomplete="off" class="layui-input">
+        <button class="layui-btn" onclick="review()">评论</button>
+        <div class='content'>
+
+        </div>
+      </div>
+    </div>
+    <div class="stars"></div>
+  </div>
+  {% endraw %}
+  <script>
+    layui.use(['http', 'api', 'laydate', 'form', 'rate'], function () {
+
+      var HTTP = layui.http;
+      var API = layui.api;
+      var laydate = layui.laydate;
+      var form = layui.form;
+      var rate = layui.rate;
+
+
+
+      var vm = new Vue({
+        data: {
+          startingPlace: '',
+          endPlace: '',
+          startTime: '',
+          hotels: []
+        },
+        el: '#app',
+        computed: {
+
+        },
+        methods: {}
+      })
+
+
+      //执行一个laydate实例
+      laydate.render({
+        elem: '#startTime' //指定元素
+      });
+
+
+      form.on('submit(searchFlys)', function (data) {
+        HTTP.ajax({
+          url: API.searchHotel,
+          success: function (res) {
+            var hotels = res.hotels;
+            vm.hotels = hotels;
+            setStars();
+          }
+        });
+        return false;
+      });
+
+
+      function setStars() {
+        setTimeout(function () {
+          vm.hotels.forEach(function (item, index) {
+            console.log(item);
+            rate.render({
+              elem: '#stars-' + index,
+              half: true,
+              value: Number(item.score),
+              readonly: true
+            });
+          });
+        });
+      }
+
+
+
+    });
+  </script>
+</body>
+
+</html>
+
+<script>
+  function review(){
+    var msg = $('[name="title"]').val();
+    if(msg == ''){
+      layer.msg('评论不能为空');
+      return;
+    }
+    $('[name="title"]').val('');
+    $('.content').append("<div class='msg'>"+ msg +"</div><div>2019-5-11</div>");
+  }
+</script>

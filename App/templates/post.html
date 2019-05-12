@@ -37,6 +37,35 @@
     display: none;
   }
 </style>
+<style>
+  .list{
+    height:150px;
+    border-top:1px solid #e9eaeb;
+    padding:20px;
+  }
+  .list-foot{
+    color:#3399ea;
+  }
+  span{
+    font-size:14px;
+    font-family: 'Microsoft YaHei'
+  }
+  p{
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    padding:10px 0 10px 0;
+  }
+  .ope{
+    float:right;
+  }
+  .list:hover{
+    cursor:hand;
+    background:#e6e6e6;
+  }
+</style>
+
 
 <body>
   {% raw %}
@@ -74,68 +103,59 @@
         </li>
       </ul>
     </div>
-
-    <div class="main">
+    
+    <div class="main"></div>
       <div class="user-tab-info">
-        <form class="layui-form" action="">
-
-          <div class="layui-form-item">
-            <label class="layui-form-label">出发地</label>
-            <div class="layui-inline">
-              <input type="text" id="startingPlace" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off"
-                class="layui-input">
-            </div>
+        <div class='list'>
+          <h1>
+            <a href='./content.html'>js断点续传</a>
+          </h1>
+          <p>
+            <a href='/content.html'>js 断点续传 1. js断点续断点续传 1. js断点续传的思路 对于一个大文件， 可以将其切割成适当的小文件，提交给后台断点续传 1. js断点续传的思路 对于一个大文件， 可以将其切割成适当的小文件，提交给后台断点续传 1. js断点续传的思路
+              对于一个大文件 ，可以将其切割成适当的小文件，提交给后台断点续传 1. js断点续传的思路 对于一个大文件， 可以将其切割成适当的小文件，提交给后台断点续传 1. js断点续传的思路 对于一个大文件，可以 将其切割成适当的小文件，提交给后台断点续传
+              1. js断点续传的思路 对于一个大文件，可以将 其切割成适当的小文件，提交给后台断点续传 1. js断点续传的思路 对于一个大文件，可以将其切 割成适当的小文件，提交给后台断点续传 1. js断点续传的思路 对于一个大文件，可以将其切割成适当
+              的小文件，提交给后台传的思路 对于一个大文件，可以将其切割成适当的小文件，提交给后台，再由 后台合并成大文件。 这样做法的好处有： （1）化整为零，可以防止文件上传中断而导致整个文件都 需要重新上传的杯具问题。 （2）分成小文件，可以利用ajax的多线程，同时提交多个小文件，从而提
+              升上
+            </a>
+          </p>
+          <div>
+            <span>2019-5-11 14:49</span>
+            <span>|</span>
+            <span>阅读数：</span>
+            <span class='list-foot'>0</span>
+            <span>|</span>
+            <span>评论数：</span>
+            <span class='list-foot'>0</span>
           </div>
-
-          <div class="layui-form-item">
-            <label class="layui-form-label">到达</label>
-            <div class="layui-inline">
-              <input type="text" id="endPlace" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
-            </div>
+          <div class="ope">
+            <a href="">删除</a>
           </div>
-
-          <div class="layui-form-item">
-            <label class="layui-form-label">时间</label>
-            <div class="layui-inline">
-              <input type="text" id="startTime" class="layui-input" required lay-verify="required">
-            </div>
+        </div>
+        <div class='list'>
+          <h1>
+            <a href='./content.html'>js断点续传</a>
+          </h1>
+          <p>
+            <a href='/content.html'>js 断点续传 1. js断点续断点续传 1. js断点续传的思路 对于一个大文件， 可以将其切割成适当的小文件，提交给后台断点续传 1. js断点续传的思路 对于一个大文件， 可以将其切割成适当的小文件，提交给后台断点续传 1. js断点续传的思路
+              对于一个大文件 ，可以将其切割成适当的小文件，提交给后台断点续传 1. js断点续传的思路 对于一个大文件， 可以将其切割成适当的小文件，提交给后台断点续传 1. js断点续传的思路 对于一个大文件，可以 将其切割成适当的小文件，提交给后台断点续传
+              1. js断点续传的思路 对于一个大文件，可以将 其切割成适当的小文件，提交给后台断点续传 1. js断点续传的思路 对于一个大文件，可以将其切 割成适当的小文件，提交给后台断点续传 1. js断点续传的思路 对于一个大文件，可以将其切割成适当
+              的小文件，提交给后台传的思路 对于一个大文件，可以将其切割成适当的小文件，提交给后台，再由 后台合并成大文件。 这样做法的好处有： （1）化整为零，可以防止文件上传中断而导致整个文件都 需要重新上传的杯具问题。 （2）分成小文件，可以利用ajax的多线程，同时提交多个小文件，从而提
+              升上
+            </a>
+          </p>
+          <div>
+            <span>2019-5-11 14:49</span>
+            <span>|</span>
+            <span>阅读数：</span>
+            <span class='list-foot'>0</span>
+            <span>|</span>
+            <span>评论数：</span>
+            <span class='list-foot'>0</span>
           </div>
-
-          <button class="layui-btn layui-btn-normal" lay-submit lay-filter="searchFlys">搜索</button>
-
-        </form>
-
-        <table class="layui-table">
-          <thead>
-            <tr>
-              <th>酒店名称</th>
-              <th>地址</th>
-              <th>描述</th>
-              <th>评分</th>
-              <th>剩余</th>
-              <th>价格</th>
-              <th>操作</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(info, index) in hotels">
-              <td>{{info.hotelName}}</td>
-              <td>{{info.address}}</td>
-              <td>{{info.Introduction}}</td>
-              <td>
-                <div :id="'stars-' + index"></div>
-              </td>
-              <td>{{info.number}}</td>
-              <td>{{info.price}}</td>
-              <td>
-                <button class="layui-btn layui-btn-sm">预定</button>
-              </td>
-            </tr>
-            <tr v-if="hotels.length == 0">
-              <td colspan="7" style="text-align: center;">暂无数据</td>
-            </tr>
-          </tbody>
-        </table>
+          <div class="ope">
+            <a href="">删除</a>
+          </div>
+        </div>
       </div>
     </div>
     <div class="stars"></div>
