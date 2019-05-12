@@ -119,6 +119,7 @@ class Reply(db.Model):
     postPic = db.Column(db.Text)
 
 
+
     def to_json(self):
         dict = self.__dict__
         if "_sa_instance_state" in dict:
