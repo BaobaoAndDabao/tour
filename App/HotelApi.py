@@ -2,7 +2,7 @@ from flask import Blueprint, request,jsonify,make_response,session
 
 from App.common.ResData import ResData
 from App.ext import db
-from App.models import User, Flight, Hotel
+from App.models import User, Flight, Hotel,UserBuyRecord
 
 hotelBlue =Blueprint("hotel",__name__)
 
@@ -100,8 +100,8 @@ def delete():
 def buy():
     userName = request.cookies.get('username')
     if(userName is None):
-        return ResData.needLogin(userName)
-        hotelId=request.form.get('hotelId')
+      return ResData.needLogin(userName)
+    hotelId=request.form.get('hotelId')
     if(hotelId is None):
         return ResData.paramEmpty(hotelId)
     hotel=Hotel.query.filter(Hotel.hotelId==hotelId).first()

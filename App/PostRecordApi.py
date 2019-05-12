@@ -10,7 +10,7 @@ postRecordBlue =Blueprint("postRecord",__name__)
 def init_postRecordBlue(app):
     app.register_blueprint(blueprint=postRecordBlue)
 
-
+#查看帖子列表
 @postRecordBlue.route("/postRecord/queryAll", methods=["POST", "GET"])
 def queryAll():
     postRecords = PostRecord.query.all()
@@ -24,6 +24,7 @@ def queryAll():
     res = make_response(ResData.success(postRecordsJson))
     return res
 
+
 def querReplyByPostRecordId(postId):
     replys = Reply.query.filter(Reply.replyPostId == postId).all()
     return replys
@@ -31,7 +32,7 @@ def querReplyByPostRecordId(postId):
 def querReplyCountByPostRecordId(postId):
     count = Reply.query.filter(Reply.replyPostId == postId).count()
     return count
-
+#查看一个贴子全部内容
 @postRecordBlue.route("/postRecord/queryByPostRecordId",methods=["POST"])
 def queryByPostRecordId():
     postRecordId = request.form.get('postRecordId')
@@ -46,7 +47,7 @@ def queryByPostRecordId():
     res["postRecords"]=postRecordList
     return make_response(ResData.success(res))
 
-
+#发帖
 @postRecordBlue.route("/postRecord/insert",methods=["POST"])
 def insert():
     userName = request.cookies.get('userName')
@@ -66,35 +67,14 @@ def insert():
     db.session.commit()
     return ResData.success(None)
 
-
+#删帖
 @postRecordBlue.route("/postRecord/delete",methods=["POST"])
 def delete():
     postRecordId=request.form.get('postRecordId')
     if(postRecordId is None):
         return ResData.paramEmpty(postRecordId)
-    postRecord=PostRecord.query.filter(PostRecord.postRecordId==postRecordId).first()
+    postRecord=PostRecord.query.filter(PostRecord.postId==postRecordId).first()
     db.session.delete(postRecord)
     db.session.commit()
     return ResData.success(None)
 
-
-@postRecordBlue.route("/postRecord/buy",methods=["POST"])
-def buy():
-    userName = request.cookies.get('username')
-    if(userName is None):
-        return ResData.needLogin()
-    postRecordId=request.form.get('postRecordId')
-    if(postRecordId is None):
-        return ResData.paramEmpty(postRecordId)
-    postRecord=PostRecord.query.filter(PostRecord.postRecordId==postRecordId).first()
-    postRecord.number=postRecord.number - 1
-
-    userBuyRecord=UserBuyRecord()
-    userBuyRecord.productId =postRecordId
-    userBuyRecord.productType ="postRecord"
-    userBuyRecord.userName = userName
-
-    db.session.add(postRecord)
-    db.session.add(userBuyRecord)
-    db.session.commit()
-    return ResData.success(None)
