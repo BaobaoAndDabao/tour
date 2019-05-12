@@ -23,7 +23,8 @@ exports('api', {
   replyPostRecord: '/postRecord/reply',
   deletePostRecord: '/postRecord/delete',
   queryByUserCoupon: '/coupon/queryByUser',
-  getShareCoupon: '/coupon/getShareCoupon'
+  getShareCoupon: '/coupon/getShareCoupon',
+  queryUserBuyRecord: '/user/queryUserBuyRecord'
 });
 
 }); 

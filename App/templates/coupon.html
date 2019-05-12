@@ -213,7 +213,7 @@
           this.queryByUserCoupon();
 
           http.ajax({
-            url: api.raidersRecommend,
+            url: api.queryUserBuyRecord,
             success: function (res) {
               var landscapes = res.landscapes;
               var flights = res.flights;
