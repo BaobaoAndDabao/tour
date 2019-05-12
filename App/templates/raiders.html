@@ -162,7 +162,7 @@
               <td>{{info.address}}</td>
               <td>{{info.introduction}}</td>
               <td>
-                <div :id="'stars-' + index"></div>
+                <div :id="'stars1-' + index"></div>
               </td>
               <td>{{info.number}}</td>
               <td>{{info.price}}</td>
@@ -289,6 +289,14 @@
           vm.landscapes.forEach(function (item, index) {
             rate.render({
               elem: '#stars-' + index,
+              half: true,
+              value: Number(item.score),
+              readonly: true
+            });
+          });
+          vm.hotels.forEach(function (item, index) {
+            rate.render({
+              elem: '#stars1-' + index,
               half: true,
               value: Number(item.score),
               readonly: true
