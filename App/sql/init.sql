@@ -625,3 +625,23 @@ INSERT INTO `post_record` (`postBy`, `postContent`, `postTitle`, `postTime`, `po
 
 INSERT INTO `coupon` (`username`, `price`) VALUES ( 'fan', '100');
 INSERT INTO `coupon` (`username`, `price`) VALUES ('wenzhihao', '200');
+
+
+
+INSERT INTO `user_buy_record` (`productId`, `productType`,`userName`) VALUES ('1', 'hotel', 'fan');
+INSERT INTO `user_buy_record` (`productId`, `productType`,`userName`) VALUES ('4', 'hotel', 'fan');
+INSERT INTO `user_buy_record` (`productId`, `productType`,`userName`) VALUES ('1', 'hotel', 'fan');
+INSERT INTO `user_buy_record` (`productId`, `productType`,`userName`) VALUES ('1', 'hotel', 'fan');
+INSERT INTO `user_buy_record` (`productId`, `productType`,`userName`) VALUES ('1', 'hotel', 'fan');
+INSERT INTO `user_buy_record` (`productId`, `productType`,`userName`) VALUES ('2', 'hotel', 'fan');
+INSERT INTO `user_buy_record` (`productId`, `productType`,`userName`) VALUES ('2', 'hotel', 'fan');
+INSERT INTO `user_buy_record` (`productId`, `productType`,`userName`) VALUES ('2', 'hotel', 'fan');
+INSERT INTO `user_buy_record` (`productId`, `productType`,`userName`) VALUES ('4', 'hotel', 'fan');
+INSERT INTO `user_buy_record` (`productId`, `productType`,`userName`) VALUES ('1', 'hotel', 'fan');
+INSERT INTO `user_buy_record` (`productId`, `productType`,`userName`) VALUES ('4', 'hotel', 'fan');
+INSERT INTO `user_buy_record` (`productId`, `productType`,`userName`) VALUES ('1', 'hotel', 'fan');
+INSERT INTO `user_buy_record` (`productId`, `productType`,`userName`) VALUES ('1', 'hotel', 'fan');
+INSERT INTO `user_buy_record` (`productId`, `productType`,`userName`) VALUES ('1', 'hotel', 'fan');
+INSERT INTO `user_buy_record` (`productId`, `productType`,`userName`) VALUES ('1', 'hotel', 'fan');
+INSERT INTO `user_buy_record` (`productId`, `productType`,`userName`) VALUES ('1', 'hotel', 'fan');
+INSERT INTO `user_buy_record` (`productId`, `productType`,`userName`) VALUES ('3', 'landscape', 'fan');
