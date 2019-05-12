@@ -56,6 +56,7 @@ def update():
 
 
 
+
 @blue.route("/user/queryUserBuyRecord", methods=["POST", "GET"])
 def queryUserBuyRecord():
   username = request.cookies.get('username')
