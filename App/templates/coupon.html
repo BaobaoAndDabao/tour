@@ -110,11 +110,17 @@
             <div class="layui-col-md3" v-for="flight in flights">
               <div class="layui-card">
                 <div class="layui-card-header">
-                  所属：{{flight}}
+                  {{flight.flightName}}
                   <i class="layui-icon" @click="copy(coupon)"></i>
                 </div>
                 <div class="layui-card-body postContent-body">
-                  价格：{{flight}}
+                  出发地点：{{flight.startingPlace}}
+                  <br>
+                  出发时间：{{flight.startTime}}
+                  <br>
+                  到达地点：{{flight.endPlace}}
+                  <br>
+                  到达时间：{{flight.endTime}}
                 </div>
               </div>
             </div>
