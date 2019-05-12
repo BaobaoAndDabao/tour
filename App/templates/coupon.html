@@ -31,50 +31,18 @@
     float: left;
     clear: unset !important;
   }
+
+  .x-admin-sm .layui-icon {
+    font-size: 14px;
+    float: right;
+    cursor: pointer;
+  }
 </style>
 <style type="text/css">
   [v-cloak] {
     display: none;
   }
 </style>
-<style>
-  .list{
-    height:150px;
-    border-top:1px solid #e9eaeb;
-    padding:20px;
-  }
-  .list-foot{
-    color:#3399ea;
-  }
-  span{
-    font-size:14px;
-    font-family: 'Microsoft YaHei'
-  }
-  p{
-    font-size: 16px;
-    overflow: hidden;
-    text-overflow:ellipsis;
-    white-space: nowrap;
-    padding:10px 0 10px 0;
-  }
-  .ope{
-    float:right;
-  }
-  .list:hover {
-    cursor:hand;
-    background:#e6e6e6;
-  }
-  .postContent {
-    height: 30px;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap
-  }
-  .postContent-body {
-    cursor: pointer;
-  }
-</style>
-
 
 <body>
   {% raw %}
@@ -96,11 +64,11 @@
         <li class="layui-nav-item">
           <a href="recommend.html">热门推荐</a>
         </li>
-        <li class="layui-nav-item layui-this">
+        <li class="layui-nav-item">
           <a href="post.html">社区交流</a>
         </li>
         <li class="layui-nav-item">
-          <a href="coupon.html">资源共享</a>
+          <a href="coupon.html layui-this">资源共享</a>
         </li>
       </ul>
       <ul class="layui-nav layui-bg-blue right" lay-filter="">
@@ -112,28 +80,20 @@
         </li>
       </ul>
     </div>
-    
-    <div class="main"></div>
-      <div class="user-tab-info">
-        
 
-        <div class="clearfix" style="height: 50px;">
-          <button @click="addpost" class="layui-btn layui-btn-normal layui-btn-radius floatRight">新建文章</button>
-        </div>
-        <div style="padding: 20px; background-color: #F2F2F2;" >
+    <div class="main">
+      <div class="user-tab-info">
+        <blockquote class="layui-elem-quote"> 我的优惠券</blockquote>
+        <div style="padding: 20px; background-color: #F2F2F2;">
           <div class="layui-row layui-col-space15">
-            <div class="layui-col-md6" v-for="postRecord in postRecords">
+            <div class="layui-col-md3" v-for="coupon in coupons">
               <div class="layui-card">
                 <div class="layui-card-header">
-                  <i class="layui-icon" @click="deletePost(postRecord)" 
-                    v-if="useInfo.userName == postRecord.postBy"></i>  
-                   {{postRecord.postTitle}}
+                  所属：{{coupon.username}}
+                  <i class="layui-icon" @click="copy(coupon)"></i>
                 </div>
-                <div class="layui-card-body postContent-body" @click="gotDetail(postRecord)">
-                  <div class="postContent">{{postRecord.postContent}}</div>
-                  <br> {{postRecord.postTime}}
-                  阅读数：{{0}}
-                  评论数：{{postRecord.replyCount}}
+                <div class="layui-card-body postContent-body">
+                  价格：{{coupon.price}}
                 </div>
               </div>
             </div>
@@ -143,63 +103,72 @@
     </div>
   </div>
   {% endraw %}
+
+  <script type="text/javascript" src="./static/js/xcity.js"></script>
+  <link rel="stylesheet" type="text/css" href="./static/asset/js/page/page.css">
+  <script type="text/javascript" src="./static/asset/js/page/page.js"></script>
   <script>
-    layui.use(['http', 'api', 'laydate', 'form', 'rate'], function () {
+    layui.use(['http', 'api', 'laydate', 'form', 'rate', 'amap'], function () {
 
       var http = layui.http;
       var api = layui.api;
+      var laydate = layui.laydate;
+      var form = window.form = layui.form;
+
+      function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+      }
+
 
       var vm = new Vue({
         data: {
-          startingPlace: '',
-          endPlace: '',
-          startTime: '',
-          postRecords: []
+          coupons: []
         },
         el: '#app',
         computed: {
-          useInfo: function () {
-            var info = window.sessionStorage.getItem('useInfo');
-            try {
-              info = JSON.parse(info);
-            } catch (e) {
-              info = {};
-            }
-            return info;
-          }
+
         },
         methods: {
-          addpost: function() {
-            window.location.href = 'add-post.html';
-          },
-          gotDetail: function(postRecord) {
-            // console.log(postRecord.postId);
-            window.location.href = 'content.html?postRecordId='+ postRecord.postId;
-          },
-          deletePost: function(postRecord) {
-            http.ajax({
-              url: api.deletePostRecord,
-              data: {
-                postRecordId: postRecord.postId
-              },
-              success: function (res) {
-                layer.msg('删除成功');
-                vm.init();
+          copy: function (coupon) {
+            var url = window.location.href.split('?')[0];
+            layer.open({
+              type: 1,
+              offset: 'offset', //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+              // id: 'layerDemo' + type, //防止重复弹出
+              content: '<div style="padding: 20px 100px;">'+ url + '?couponId=' + coupon.couponId+'</div>',
+              btn: '请复制上面的链接',
+              btnAlign: 'c', //按钮居中
+              shade: 0.3, //不显示遮罩
+              yes: function () {
+                layer.closeAll();
               }
-            })
+            });
           },
-          init: function() {
+          queryByUserCoupon: function () {
             http.ajax({
-              url: api.queryAllPostRecord,
+              url: api.queryByUserCoupon,
               success: function (res) {
-                vm.postRecords = res.postRecords;
+                vm.coupons = res.coupons;
               }
-            })
+            });
           }
         },
-        mounted: function() {
-          this.init();
-        },
+        mounted: function () {
+          this.queryByUserCoupon();
+          http.ajax({
+            url: api.getShareCoupon,
+            data: {
+              couponId: GetQueryString('couponId')
+            },
+            success: function (res) {
+              layer.msg('您成功获取一张优惠券');
+              vm.queryByUserCoupon();
+            }
+          })
+        }
       })
 
     });

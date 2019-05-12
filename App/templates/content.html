@@ -75,7 +75,7 @@
           <a href="post.html">社区交流</a>
         </li>
         <li class="layui-nav-item">
-          <a href="">资源共享</a>
+          <a href="coupon.html">资源共享</a>
         </li>
       </ul>
       <ul class="layui-nav layui-bg-blue right" lay-filter="">
@@ -130,8 +130,6 @@
         if (r != null) return unescape(r[2]); return null;
       }
 
-
-
       var vm = new Vue({
         data: {
           content: {},
@@ -181,15 +179,3 @@
 </body>
 
 </html>
-
-<script>
-  function review(){
-    var msg = $('[name="title"]').val();
-    if(msg == ''){
-      layer.msg('评论不能为空');
-      return;
-    }
-    $('[name="title"]').val('');
-    $('.content').append("<div class='msg'>"+ msg +"</div><div>2019-5-11</div>");
-  }
-</script>
