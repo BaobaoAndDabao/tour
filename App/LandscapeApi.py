@@ -92,17 +92,17 @@ def delete():
 
 @landscapeBlue.route("/landscape/buy",methods=["POST"])
 def buy():
-    userName = request.cookies.get('username')
+    userName = request.cookies.get('userName')
     if(userName is None):
-        return ResData.needLogin()
+        return ResData.needLogin(userName)
     landscapeId=request.form.get('landscapeId')
     if(landscapeId is None):
         return ResData.paramEmpty(landscapeId)
     landscape=Landscape.query.filter(Landscape.landscapeId==landscapeId).first()
-    landscape.number=landscape.number - 1
+    # landscape.number=landscape.number - 1 景点票没有限制
 
-    userBuyRecord=UserBuyRecord()
-    userBuyRecord.productId =landscapeId
+    userBuyRecord = UserBuyRecord()
+    userBuyRecord.productId = landscapeId
     userBuyRecord.productType ="landscape"
     userBuyRecord.userName = userName
 

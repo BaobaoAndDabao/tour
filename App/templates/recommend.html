@@ -99,7 +99,7 @@
               </td>
               <td>{{info.price}}</td>
               <td>
-                <button class="layui-btn layui-btn-sm">预定</button>
+                <button class="layui-btn layui-btn-sm" @click="buy(info)">预定</button>
               </td>
             </tr>
             <tr v-if="landscapes.length == 0">
@@ -149,18 +149,34 @@
         computed: {
 
         },
-        methods: {},
+        methods: {
+          buy: function(info) {
+            var _this = this;
+            http.ajax({
+              url: api.buyLandscape,
+              data: {
+                landscapeId: info.landscapeId
+              },
+              success: function (res) {
+                layer.msg('购买成功');
+              }
+            });
+          },
+          init: function() {
+            var _this = this;
+            http.ajax({
+              url: api.sendRecommend,
+              success: function (res) {
+                var landscapes = res.landscapes;
+                _this.landscapes = landscapes;
+                setStars();
+              }
+            });
+          }
+        },
         mounted: function () {
-          var _this = this;
           getLocalCity();
-          http.ajax({
-            url: api.sendRecommend,
-            success: function (res) {
-              var landscapes = res.landscapes;
-              _this.landscapes = landscapes;
-              setStars();
-            }
-          });
+          this.init();
         }
       })
 

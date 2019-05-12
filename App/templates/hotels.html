@@ -42,7 +42,7 @@
 </style>
 
 <body>
-   {% raw %}
+  {% raw %}
   <div id="app" v-cloak>
     <div class="container" style="background-color: #1e9fff;">
       <ul class="layui-nav layui-bg-blue left" lay-filter="">
@@ -141,7 +141,7 @@
       </div>
     </div>
   </div>
-   {% endraw %}
+  {% endraw %}
   <script type="text/javascript" src="./static/js/xcity.js"></script>
   <script>
     layui.use(['http', 'api', 'laydate', 'form', 'rate', 'amap'], function () {
@@ -180,19 +180,37 @@
 
         },
         methods: {
-            buy: function(info) {
-                var hotelId = info.hotelId;
+          buy: function (info) {
+            var hotelId = info.hotelId;
+            http.ajax({
+              url: api.buyHotel,
+              data: {
+                hotelId: hotelId
+              },
+              success: function (res) {
+                layer.msg('购买成功');
                 http.ajax({
-                    url: api.buyHotel,
-                    data: {
-                        hotelId: hotelId
-                    },
-                    success: function(res) {
-                        console.log(res);
-                        layer.msg('购买成功');
-                    }
+                  url: api.queryAllHotel,
+                  success: function (res) {
+                    var hotels = res.hotels;
+                    vm.hotels = hotels;
+                    vm.showPage = hotels.length > 5;
+                    $('.pages').page({
+                      info: {
+                        data: vm.hotels.concat([]),
+                        pageIndex: 1,
+                        pageCount: 5
+                      },
+                      fn: function (data) {
+                        vm.hotels = data;
+                        setStars();
+                      }
+                    });
+                  }
                 });
-            }
+              }
+            });
+          }
         },
         mounted: function () {
           getLocalCity();

@@ -99,7 +99,7 @@
               </td>
               <td>{{info.price}}</td>
               <td>
-                <button class="layui-btn layui-btn-sm">预定</button>
+                <button class="layui-btn layui-btn-sm" @click="buylandscape(info)">预定</button>
               </td>
             </tr>
             <tr v-if="landscapes.length == 0">
@@ -134,7 +134,7 @@
               <td>{{info.number}}</td>
               <td>{{info.price}}</td>
               <td>
-                <button class="layui-btn layui-btn-sm" @click="buy(info)">订票</button>
+                <button class="layui-btn layui-btn-sm" @click="buyFlights(info)">订票</button>
               </td>
             </tr>
             <tr v-if="flights.length == 0">
@@ -167,7 +167,7 @@
               <td>{{info.number}}</td>
               <td>{{info.price}}</td>
               <td>
-                <button class="layui-btn layui-btn-sm">预定</button>
+                <button class="layui-btn layui-btn-sm" @click="buyHotels(info)">预定</button>
               </td>
             </tr>
             <tr v-if="hotels.length == 0">
@@ -219,22 +219,67 @@
         computed: {
 
         },
-        methods: {},
+        methods: {
+          buylandscape: function (info) {
+            var _this = this;
+            http.ajax({
+              url: api.buyLandscape,
+              data: {
+                landscapeId: info.landscapeId
+              },
+              success: function (res) {
+                layer.msg('购买成功');
+                _this.init();
+              }
+            });
+          },
+          buyFlights: function (info) {
+            var _this = this;
+            var flightId = info.flightId;
+            http.ajax({
+              url: api.buyFlight,
+              data: {
+                flightId: flightId
+              },
+              success: function (res) {
+                layer.msg('购买成功');
+                _this.init();
+              }
+            })
+          },
+          buyHotels: function (info) {
+            var hotelId = info.hotelId;
+            var _this = this;
+            http.ajax({
+              url: api.buyHotel,
+              data: {
+                hotelId: hotelId
+              },
+              success: function (res) {
+                layer.msg('购买成功');
+                _this.init();
+              }
+            });
+          },
+          init: function () {
+            var _this = this;
+            http.ajax({
+              url: api.raidersRecommend,
+              success: function (res) {
+                var landscapes = res.landscapes;
+                var flights = res.flights;
+                var hotels = res.hotels;
+                _this.landscapes = landscapes;
+                _this.flights = flights;
+                _this.hotels = hotels;
+                setStars();
+              }
+            });
+          }
+        },
         mounted: function () {
-          var _this = this;
           getLocalCity();
-          http.ajax({
-            url: api.raidersRecommend,
-            success: function (res) {
-              var landscapes = res.landscapes;
-              var flights = res.flights;
-              var hotels = res.hotels;
-              _this.landscapes = landscapes;
-              _this.flights = flights;
-              _this.hotels = hotels;
-              setStars();
-            }
-          });
+          this.init();
         }
       })
 

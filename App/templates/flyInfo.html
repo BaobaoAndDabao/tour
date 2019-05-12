@@ -194,6 +194,7 @@
         },
         methods: {
           buy: function(info) {
+            var _this = this;
             var flightId = info.flightId;
             http.ajax({
               url: api.buyFlight,
@@ -201,8 +202,25 @@
                 flightId: flightId
               },
               success: function(res) {
-                console.log(res);
                 layer.msg('购买成功');
+                http.ajax({
+                  url: api.queryAllFlight,
+                  success: function (res) {
+                    var flights = res.flights;
+                    _this.flights = flights;
+                    _this.showPage = flights.length > 5;
+                    $('.pages').page({
+                      info: {
+                        data: vm.flights.concat([]),
+                        pageIndex: 1,
+                        pageCount: 5
+                      },
+                      fn: function (data) {
+                        vm.flights = data;
+                      }
+                    });
+                  }
+                });
               }
             });
           }
