@@ -39,6 +39,11 @@ def search():
     if(userName is None):
         return ResData.needLogin(userName)
     couponId = request.form.get('couponId')#优惠券Id
+
+    couponByUser=Coupon.query.filter(Coupon.couponId == couponId,Coupon.username == userName).first()
+    if(couponByUser != None):
+        res = {"code": "333", "data": ""}
+        return jsonify(res)
     coupon = Coupon.query.filter(Coupon.couponId == couponId).first()
     coupon.username=userName
     db.session.add(coupon)
