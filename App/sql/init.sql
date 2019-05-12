@@ -645,3 +645,13 @@ INSERT INTO `user_buy_record` (`productId`, `productType`,`userName`) VALUES ('1
 INSERT INTO `user_buy_record` (`productId`, `productType`,`userName`) VALUES ('1', 'hotel', 'fan');
 INSERT INTO `user_buy_record` (`productId`, `productType`,`userName`) VALUES ('1', 'hotel', 'fan');
 INSERT INTO `user_buy_record` (`productId`, `productType`,`userName`) VALUES ('3', 'landscape', 'fan');
+
+
+
+
+INSERT INTO `reply` (`replyBy`, `replyContent`,`replyTime`,`replyPostId`,`postPic`) VALUES ('张三', '这是张三的回复', '2019-05-20', 1, 'GJUHKLHJFGHDFGNDFGNGHKGHJKHKHJKGHKVGJCNXCBVXFBXFH');
+INSERT INTO `reply` (`replyBy`, `replyContent`,`replyTime`,`replyPostId`,`postPic`) VALUES ('fan', '你好', '2019-05-12 16:37:34', 8, NULL);
+INSERT INTO `reply` (`replyBy`, `replyContent`,`replyTime`,`replyPostId`,`postPic`) VALUES ('fan', '你好', '2019-05-12 16:37:39', 8, NULL);
+INSERT INTO `reply` (`replyBy`, `replyContent`,`replyTime`,`replyPostId`,`postPic`) VALUES ('fan', '你好', '2019-05-12 16:37:41', 8, NULL);
+INSERT INTO `reply` (`replyBy`, `replyContent`,`replyTime`,`replyPostId`,`postPic`) VALUES ('fan', '你好', '2019-05-12 16:38:26', 11, NULL);
+INSERT INTO `reply` (`replyBy`, `replyContent`,`replyTime`,`replyPostId`,`postPic`) VALUES ('fan', '你好', '2019-05-12 16:38:28', 11, NULL);
