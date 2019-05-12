@@ -10,7 +10,9 @@ exports('api', {
   insertHotel: '/hotel/insert',
   insertScape: '/landscape/insert',
   queryAllLandscape: '/landscape/queryAll',
-  queryAllHotel: '/hotel/queryAll'
+  queryAllHotel: '/hotel/queryAll',
+  queryAllFlight: '/flight/queryAll',
+  buyFlight: '/flight/buy'
 });
 
 }); 

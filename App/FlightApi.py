@@ -10,11 +10,24 @@ def init_flightBlue(app):
     app.register_blueprint(blueprint=flightBlue)
 
 
-@flightBlue.route("/flight/createTable",methods=["POST"])
+@flightBlue.route("/flight/createTable", methods=["POST"])
 def createTable():
     db.drop_all()
     db.create_all()
     return "sec"
+
+
+@flightBlue.route("/flight/queryAll", methods=["POST", "GET"])
+def queryAll():
+    flights = Flight.query.filter().all()
+    flightList = []
+    for one in flights:
+        flightList.append(one.to_json())
+    flightsJson = {"flights": flightList}
+    res = make_response(ResData.success(flightsJson))
+    return res
+
+
 
 @flightBlue.route("/flight/search",methods=["POST"])
 def search():
@@ -98,17 +111,17 @@ def delete():
 
 @flightBlue.route("/flight/buy",methods=["POST"])
 def buy():
+    flightId = request.form.get('flightId')
     userName = request.cookies.get('username')
     if(userName is None):
-        return ResData.needLogin()
-    flightId=request.form.get('flightId')
+        return ResData.needLogin(flightId)
     if(flightId is None):
         return ResData.paramEmpty(flightId)
     flight=Flight.query.filter(Flight.flightId==flightId).first()
-    flight.number=flight.number - 1
+    flight.number = flight.number - 1
 
-    userBuyRecord=UserBuyRecord()
-    userBuyRecord.productId =flightId
+    userBuyRecord = UserBuyRecord()
+    userBuyRecord.productId = flightId
     userBuyRecord.productType ="flight"
     userBuyRecord.userName = userName
 
