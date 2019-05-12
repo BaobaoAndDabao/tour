@@ -92,7 +92,7 @@ def delete():
 
 @landscapeBlue.route("/landscape/buy",methods=["POST"])
 def buy():
-    userName = request.cookies.get('userName')
+    userName = request.cookies.get('username')
     if(userName is None):
         return ResData.needLogin(userName)
     landscapeId=request.form.get('landscapeId')

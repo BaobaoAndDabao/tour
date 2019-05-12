@@ -50,7 +50,7 @@ def queryByPostRecordId():
 #发帖
 @postRecordBlue.route("/postRecord/insert",methods=["POST"])
 def insert():
-    userName = request.cookies.get('userName')
+    userName = request.cookies.get('username')
     if(userName is None):
         return ResData.needLogin(userName)
     postContent=request.form.get('postContent')

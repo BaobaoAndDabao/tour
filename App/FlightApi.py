@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, make_response, session
-
+import os
 from App.common.ResData import ResData
 from App.ext import db
 from App.models import User, Flight, UserBuyRecord
@@ -127,5 +127,19 @@ def buy():
 
     db.session.add(flight)
     db.session.add(userBuyRecord)
+    db.session.commit()
+    return ResData.success(None)
+
+@flightBlue.route("/flight/initSql", methods=["POST"])
+def initSql():
+    PATH = lambda p: os.path.abspath(os.path.join(os.path.dirname(__file__), p))
+    p=os.path.realpath(__file__)
+    cur_path = os.path.dirname(os.path.realpath(__file__))
+    print(cur_path)
+    path=cur_path +'\sql\init.sql'
+    f = open(path,"r",encoding='UTF-8')
+    txt=f.read()
+    sql ="INSERT INTO `post_record` (`postBy`, `postContent`, `postTitle`, `postTime`, `postPic`) VALUES ('admin', '官方网址：http://yuilibrary.com/YUI Editor 是雅虎的 YUI 包中的一个可视化HTML编辑器组件。', '土耳其三日游', '2019-05-12 14:45:01', NULL);"
+    data_query = db.session.execute(sql)
     db.session.commit()
     return ResData.success(None)

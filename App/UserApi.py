@@ -25,7 +25,7 @@ def login():
 
 @blue.route("/user/update",methods=["POST"])
 def update():
-    userName = request.cookies.get('userName')
+    userName = request.cookies.get('username')
     #userName=request.form.get('userName')
     password = request.form.get('password')
     nickName = request.form.get('nickName')
