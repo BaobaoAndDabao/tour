@@ -2,7 +2,8 @@ from flask import Blueprint, request,jsonify,make_response,session
 
 from App.common.ResData import ResData
 from App.ext import db
-from App.models import User
+from App.models import User,Landscape,Flight,Hotel,UserBuyRecord
+import  operator
 
 blue =Blueprint("user",__name__)
 
@@ -55,6 +56,33 @@ def update():
 
 
 
+
+@blue.route("/user/queryUserBuyRecord", methods=["POST", "GET"])
+def queryUserBuyRecord():
+  username = request.cookies.get('username')
+  userBuyRecords=UserBuyRecord.query.filter(UserBuyRecord.userName ==username ).all()
+  hotelList = []
+  landscapeList = []
+  flightList = []
+  for userBuyRecord in  userBuyRecords:
+      if(operator.eq(userBuyRecord.productType,'hotel') ):
+          hotels = Hotel.query.filter(Hotel.hotelId == userBuyRecord.productId).all()
+          for hotel in hotels:
+              hotelList.append(hotel.to_json())
+      if(operator.eq(userBuyRecord.productType,'landscape') ):
+          landscapes = Landscape.query.filter(Landscape.landscapeId == userBuyRecord.productId).all()
+          for landscape in landscapes:
+              landscapeList.append(landscape.to_json())
+      if(operator.eq(userBuyRecord.productType,'flight') ):
+          flights = Flight.query.filter(Flight.flightId == userBuyRecord.productId).all()
+          for flight in flights:
+              flightList.append(flight.to_json())
+  resultJson = {
+    "landscapes": landscapeList,
+    "flights": flightList,
+    "hotels": hotelList
+  }
+  return make_response(ResData.success(resultJson))
 
 
 
