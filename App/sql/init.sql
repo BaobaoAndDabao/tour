@@ -648,6 +648,7 @@ INSERT INTO `reply` (`replyBy`, `replyContent`,`replyTime`,`replyPostId`,`postPi
 
 
 
+
 INSERT INTO `post_record` (`postBy`, `postContent`, `postTitle`, `postTime`, `postPic`) VALUES ('wenzhihao', '这是帖子内容', '这是帖子标题', '2019-05-12 11:24:50', '这是图片');
 INSERT INTO `post_record` (`postBy`, `postContent`, `postTitle`, `postTime`, `postPic`) VALUES ('wenzhihao', '这是帖子内容', '这是帖子标题', '2019-05-12 12:01:19', '这是图片');
 INSERT INTO `post_record` (`postBy`, `postContent`, `postTitle`, `postTime`, `postPic`) VALUES ('fan', '你好', '', '2019-05-12 16:38:17', NULL);
