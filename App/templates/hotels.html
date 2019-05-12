@@ -129,7 +129,7 @@
               <td>{{info.number}}</td>
               <td>{{info.price}}</td>
               <td>
-                <button class="layui-btn layui-btn-sm">预定</button>
+                <button class="layui-btn layui-btn-sm" @click="buy(info)">预定</button>
               </td>
             </tr>
             <tr v-if="hotels.length == 0">
@@ -179,7 +179,21 @@
         computed: {
 
         },
-        methods: {},
+        methods: {
+            buy: function(info) {
+                var hotelId = info.hotelId;
+                http.ajax({
+                    url: api.buyHotel,
+                    data: {
+                        hotelId: hotelId
+                    },
+                    success: function(res) {
+                        console.log(res);
+                        layer.msg('购买成功');
+                    }
+                });
+            }
+        },
         mounted: function () {
           getLocalCity();
           http.ajax({

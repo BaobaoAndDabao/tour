@@ -13,6 +13,7 @@ exports('api', {
   queryAllHotel: '/hotel/queryAll',
   queryAllFlight: '/flight/queryAll',
   buyFlight: '/flight/buy',
+    buyHotel: '/hotel/buy',
   sendRecommend: '/recommend/send',
   raidersRecommend: '/recommend/raiders'
 });
