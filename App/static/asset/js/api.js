@@ -21,7 +21,9 @@ exports('api', {
   queryByPostRecordId: '/postRecord/queryByPostRecordId',
   insertPostRecord: '/postRecord/insert',
   replyPostRecord: '/postRecord/reply',
-  deletePostRecord: '/postRecord/delete'
+  deletePostRecord: '/postRecord/delete',
+  queryByUserCoupon: '/coupon/queryByUser',
+  getShareCoupon: '/coupon/getShareCoupon'
 });
 
 }); 

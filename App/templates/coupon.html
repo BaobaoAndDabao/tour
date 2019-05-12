@@ -31,25 +31,18 @@
     float: left;
     clear: unset !important;
   }
+
+  .x-admin-sm .layui-icon {
+    font-size: 14px;
+    float: right;
+    cursor: pointer;
+  }
 </style>
 <style type="text/css">
   [v-cloak] {
     display: none;
   }
 </style>
-<style>
-  p{
-    margin-bottom: 20px;
-  }
-  .postTitle {
-    /* margin-top: 30px; */
-  }
-  .layui-code {
-    height: 300px;
-  }
-  
-</style>
-
 
 <body>
   {% raw %}
@@ -71,11 +64,11 @@
         <li class="layui-nav-item">
           <a href="recommend.html">热门推荐</a>
         </li>
-        <li class="layui-nav-item layui-this">
+        <li class="layui-nav-item">
           <a href="post.html">社区交流</a>
         </li>
         <li class="layui-nav-item">
-          <a href="coupon.html">资源共享</a>
+          <a href="coupon.html layui-this">资源共享</a>
         </li>
       </ul>
       <ul class="layui-nav layui-bg-blue right" lay-filter="">
@@ -87,91 +80,95 @@
         </li>
       </ul>
     </div>
-    
-    <div class="main"></div>
+
+    <div class="main">
       <div class="user-tab-info">
-        <!-- <button class="layui-btn" @click="back"><i class="layui-icon"></i>返回</button> -->
-        <h3 class="postTitle">{{content.postTitle}}</h3>
-        <pre class="layui-code" lay-title="JavaScript" lay-skin="notepad">{{content.postContent}}</pre>
-
-        <blockquote class="layui-elem-quote postTitle">评论列表</blockquote>
-        <blockquote  v-for="postRecord in postRecords" class="layui-elem-quote postTitle">
-           {{postRecord.replyBy}}: {{postRecord.replyContent}}
-           <br/>
-           {{postRecord.replyTime}}
-        </blockquote>
-
-        <form class="layui-form layui-col-md12  layui-form-pane">
-          <div class="layui-form-item">
-            <!-- <label class="layui-form-label">评论</label> -->
-            <div class="layui-input-inline">
-              <input type="text" id="replyContent" name="title" required lay-verify="required" placeholder="输入评论内容" autocomplete="off" class="layui-input">
+        <blockquote class="layui-elem-quote"> 我的优惠券</blockquote>
+        <div style="padding: 20px; background-color: #F2F2F2;">
+          <div class="layui-row layui-col-space15">
+            <div class="layui-col-md3" v-for="coupon in coupons">
+              <div class="layui-card">
+                <div class="layui-card-header">
+                  所属：{{coupon.username}}
+                  <i class="layui-icon" @click="copy(coupon)"></i>
+                </div>
+                <div class="layui-card-body postContent-body">
+                  价格：{{coupon.price}}
+                </div>
+              </div>
             </div>
           </div>
-          <div class="layui-btn" @click="commit">提交</div>
-        </form>
+        </div>
       </div>
     </div>
-    <div class="stars"></div>
   </div>
   {% endraw %}
+
+  <script type="text/javascript" src="./static/js/xcity.js"></script>
+  <link rel="stylesheet" type="text/css" href="./static/asset/js/page/page.css">
+  <script type="text/javascript" src="./static/asset/js/page/page.js"></script>
   <script>
-    layui.use(['http', 'api', 'laydate', 'form', 'rate'], function () {
+    layui.use(['http', 'api', 'laydate', 'form', 'rate', 'amap'], function () {
 
       var http = layui.http;
       var api = layui.api;
       var laydate = layui.laydate;
-      var form = layui.form;
-      var rate = layui.rate;
+      var form = window.form = layui.form;
 
       function GetQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
         var r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]); return null;
+        if (r != null) return unescape(r[2]);
+        return null;
       }
+
 
       var vm = new Vue({
         data: {
-          content: {},
-          postRecords: []
+          coupons: []
         },
         el: '#app',
         computed: {
 
         },
         methods: {
-          back: function() {
-            window.location.href = 'post.html';
-          },
-          commit: function() {
-            http.ajax({
-              url: api.replyPostRecord,
-              data: {
-                replyPostId: GetQueryString('postRecordId'),
-                replyContent: $("#replyContent").val()
-              },
-              success: function (res) {
-                layer.msg('评论成功');
-                vm.init();
+          copy: function (coupon) {
+            var url = window.location.href.split('?')[0];
+            layer.open({
+              type: 1,
+              offset: 'offset', //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+              // id: 'layerDemo' + type, //防止重复弹出
+              content: '<div style="padding: 20px 100px;">'+ url + '?couponId=' + coupon.couponId+'</div>',
+              btn: '请复制上面的链接',
+              btnAlign: 'c', //按钮居中
+              shade: 0.3, //不显示遮罩
+              yes: function () {
+                layer.closeAll();
               }
-            })
+            });
           },
-          init: function() {
+          queryByUserCoupon: function () {
             http.ajax({
-              url: api.queryByPostRecordId,
-              data: {
-                postRecordId: GetQueryString('postRecordId')
-              },
+              url: api.queryByUserCoupon,
               success: function (res) {
-                vm.content = res;
-                vm.postRecords = res.postRecords;
+                vm.coupons = res.coupons;
               }
-            })
+            });
           }
         },
-        mounted: function() {
-          this.init();
-        },
+        mounted: function () {
+          this.queryByUserCoupon();
+          http.ajax({
+            url: api.getShareCoupon,
+            data: {
+              couponId: GetQueryString('couponId')
+            },
+            success: function (res) {
+              layer.msg('您成功获取一张优惠券');
+              vm.queryByUserCoupon();
+            }
+          })
+        }
       })
 
     });
