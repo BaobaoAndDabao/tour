@@ -23,7 +23,7 @@ def isSameLocation(location1, location2):
 # 根据用户的登录信息推荐
 @recommendBlue.route("/recommend/send", methods=["POST", "GET"])
 def send():
-  username = 'admin'  # request.form.get('username')
+  username = request.cookies.get('userName')
   user = User.query.filter(User.userName == username).first()
   userlocation = user.location.split('-', 2)
   landscapes = Landscape.query.filter().all()
@@ -38,7 +38,7 @@ def send():
 
 @recommendBlue.route("/recommend/raiders", methods=["POST", "GET"])
 def raiders():
-  username = 'admin'  # request.form.get('username')
+  username = request.cookies.get('userName')
   user = User.query.filter(User.userName == username).first()
   userlocation = user.location.split('-', 2)
   landscapes = Landscape.query.filter().all()
