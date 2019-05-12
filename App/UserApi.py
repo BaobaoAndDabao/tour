@@ -17,7 +17,7 @@ def login():
     if(user is None):
         return ResData.fail(userName)
     res= make_response(ResData.success(user.to_json()))
-    res.set_cookie('userName', userName)
+    res.set_cookie('username', userName)
     return res
     #return ResData.success(user.to_json())
 

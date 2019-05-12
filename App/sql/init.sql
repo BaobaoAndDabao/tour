@@ -1,4 +1,4 @@
-truncate table `tour`.`user`;
+
 
 INSERT INTO `tour`.`user` (
  `userName`, 
