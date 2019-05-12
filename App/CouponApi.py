@@ -24,6 +24,13 @@ def queryAll():
     res = make_response(ResData.success(couponsJson))
     return res
 
+#根据优惠券id查询优惠券详情
+@couponBlue.route("/coupon/queryByCouponId", methods=["POST"])
+def queryByCouponId():
+    couponId = request.form.get('couponId')#优惠券Id
+    coupon = Coupon.query.filter(Coupon.couponId==couponId).first()
+    return ResData.success(coupon.to_json())
+
 
 #获取分享的优惠券
 @couponBlue.route("/coupon/getShareCoupon", methods=["POST"])
