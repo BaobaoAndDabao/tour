@@ -37,6 +37,9 @@
     float: right;
     cursor: pointer;
   }
+  .layui-elem-quote {
+    margin-top: 10px;
+  }
 </style>
 <style type="text/css">
   [v-cloak] {
@@ -67,8 +70,8 @@
         <li class="layui-nav-item">
           <a href="post.html">社区交流</a>
         </li>
-        <li class="layui-nav-item">
-          <a href="coupon.html layui-this">资源共享</a>
+        <li class="layui-nav-item layui-this">
+          <a href="coupon.html">资源共享</a>
         </li>
       </ul>
       <ul class="layui-nav layui-bg-blue right" lay-filter="">
@@ -83,17 +86,64 @@
 
     <div class="main">
       <div class="user-tab-info">
-        <blockquote class="layui-elem-quote"> 我的优惠券</blockquote>
-        <div style="padding: 20px; background-color: #F2F2F2;">
+        <blockquote class="layui-elem-quote" v-if="coupons.length"> 我的优惠券</blockquote>
+        <div  v-if="coupons.length" style="padding: 20px; background-color: #F2F2F2;">
           <div class="layui-row layui-col-space15">
             <div class="layui-col-md3" v-for="coupon in coupons">
               <div class="layui-card">
                 <div class="layui-card-header">
                   所属：{{coupon.username}}
-                  <i class="layui-icon" @click="copy(coupon)"></i>
                 </div>
                 <div class="layui-card-body postContent-body">
                   价格：{{coupon.price}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <blockquote v-if="flights.length" class="layui-elem-quote"> 我的机票</blockquote>
+        <div v-if="flights.length" style="padding: 20px; background-color: #F2F2F2;">
+          <div class="layui-row layui-col-space15">
+            <div class="layui-col-md3" v-for="flight in flights">
+              <div class="layui-card">
+                <div class="layui-card-header">
+                  所属：{{flight}}
+                  <i class="layui-icon" @click="copy(coupon)"></i>
+                </div>
+                <div class="layui-card-body postContent-body">
+                  价格：{{flight}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <blockquote v-if="hotels.length" class="layui-elem-quote"> 我的酒店</blockquote>
+        <div v-if="hotels.length" style="padding: 20px; background-color: #F2F2F2;">
+          <div class="layui-row layui-col-space15">
+            <div class="layui-col-md3" v-for="hotel in hotels">
+              <div class="layui-card">
+                <div class="layui-card-header">
+                  {{hotel.hotelName}}
+                </div>
+                <div class="layui-card-body postContent-body">
+                  {{hotel.address}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <blockquote v-if="landscapes.length" class="layui-elem-quote"> 我的门票</blockquote>
+        <div v-if="landscapes.length" style="padding: 20px; background-color: #F2F2F2;">
+          <div class="layui-row layui-col-space15">
+            <div class="layui-col-md3" v-for="landscape in landscapes">
+              <div class="layui-card">
+                <div class="layui-card-header">
+                  {{landscape.landscapeName}}
+                </div>
+                <div class="layui-card-body postContent-body">
+                  {{landscape.address}}
                 </div>
               </div>
             </div>
@@ -125,7 +175,10 @@
 
       var vm = new Vue({
         data: {
-          coupons: []
+          coupons: [],
+          landscapes: [],
+          flights: [],
+          hotels: []
         },
         el: '#app',
         computed: {
@@ -158,6 +211,19 @@
         },
         mounted: function () {
           this.queryByUserCoupon();
+
+          http.ajax({
+            url: api.raidersRecommend,
+            success: function (res) {
+              var landscapes = res.landscapes;
+              var flights = res.flights;
+              var hotels = res.hotels;
+              vm.landscapes = landscapes;
+              vm.flights = flights;
+              vm.hotels = hotels;
+            }
+          });
+
           var couponId = GetQueryString('couponId');
           if (!couponId) {
             return;
