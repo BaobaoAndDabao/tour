@@ -103,3 +103,9 @@ tour`.`landscape
 `
 (`address`, `landscapeName`, `price`, `score`, `Introduction`, `pic`) VALUES
 ('广东-深圳市-福田区', '平安大厦', '99', '5', '黄山很好', NULL);
+
+
+INSERT INTO `reply` VALUES (1, '张三', '这是张三的回复', '2019-05-20', 1, 'GJUHKLHJFGHDFGNDFGNGHKGHJKHKHJKGHKVGJCNXCBVXFBXFH');
+
+INSERT INTO `post_record` VALUES (8, 'wenzhihao', '这是帖子内容', '这是帖子标题', '2019-05-12 11:24:50', '这是图片');
+INSERT INTO `post_record` VALUES (9, 'wenzhihao', '这是帖子内容', '这是帖子标题', '2019-05-12 12:01:19', '这是图片');
