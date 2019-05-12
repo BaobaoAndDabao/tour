@@ -95,15 +95,20 @@
         <pre class="layui-code" lay-title="JavaScript" lay-skin="notepad">{{content.postContent}}</pre>
 
         <blockquote class="layui-elem-quote postTitle">评论列表</blockquote>
+        <blockquote  v-for="postRecord in postRecords" class="layui-elem-quote postTitle">
+           {{postRecord.replyBy}}: {{postRecord.replyContent}}
+           <br/>
+           {{postRecord.replyTime}}
+        </blockquote>
 
         <form class="layui-form layui-col-md12  layui-form-pane">
           <div class="layui-form-item">
             <!-- <label class="layui-form-label">评论</label> -->
             <div class="layui-input-inline">
-              <input type="text" name="title" required lay-verify="required" placeholder="输入评论内容" autocomplete="off" class="layui-input">
+              <input type="text" id="replyContent" name="title" required lay-verify="required" placeholder="输入评论内容" autocomplete="off" class="layui-input">
             </div>
           </div>
-          <button class="layui-btn" onclick="review()">提交</button>
+          <div class="layui-btn" @click="commit">提交</div>
         </form>
       </div>
     </div>
@@ -129,7 +134,8 @@
 
       var vm = new Vue({
         data: {
-          content: {}
+          content: {},
+          postRecords: []
         },
         el: '#app',
         computed: {
@@ -138,19 +144,35 @@
         methods: {
           back: function() {
             window.location.href = 'post.html';
+          },
+          commit: function() {
+            http.ajax({
+              url: api.replyPostRecord,
+              data: {
+                replyPostId: GetQueryString('postRecordId'),
+                replyContent: $("#replyContent").val()
+              },
+              success: function (res) {
+                layer.msg('评论成功');
+                vm.init();
+              }
+            })
+          },
+          init: function() {
+            http.ajax({
+              url: api.queryByPostRecordId,
+              data: {
+                postRecordId: GetQueryString('postRecordId')
+              },
+              success: function (res) {
+                vm.content = res;
+                vm.postRecords = res.postRecords;
+              }
+            })
           }
         },
         mounted: function() {
-          http.ajax({
-            url: api.queryByPostRecordId,
-            data: {
-              postRecordId: GetQueryString('postRecordId')
-            },
-            success: function(res) {
-              // console.log(res);
-              vm.content = res;
-            }
-          })
+          this.init();
         },
       })
 

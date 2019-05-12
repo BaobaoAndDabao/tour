@@ -125,7 +125,8 @@
             <div class="layui-col-md6" v-for="postRecord in postRecords">
               <div class="layui-card">
                 <div class="layui-card-header">
-                  <!-- <i class="layui-icon"></i>   -->
+                  <i class="layui-icon" @click="deletePost(postRecord)" 
+                    v-if="useInfo.userName == postRecord.postBy"></i>  
                    {{postRecord.postTitle}}
                 </div>
                 <div class="layui-card-body postContent-body" @click="gotDetail(postRecord)">
@@ -157,25 +158,47 @@
         },
         el: '#app',
         computed: {
-
+          useInfo: function () {
+            var info = window.sessionStorage.getItem('useInfo');
+            try {
+              info = JSON.parse(info);
+            } catch (e) {
+              info = {};
+            }
+            return info;
+          }
         },
         methods: {
           addpost: function() {
             window.location.href = 'add-post.html';
           },
           gotDetail: function(postRecord) {
-            console.log(postRecord.postId);
+            // console.log(postRecord.postId);
             window.location.href = 'content.html?postRecordId='+ postRecord.postId;
+          },
+          deletePost: function(postRecord) {
+            http.ajax({
+              url: api.deletePostRecord,
+              data: {
+                postRecordId: postRecord.postId
+              },
+              success: function (res) {
+                layer.msg('删除成功');
+                vm.init();
+              }
+            })
+          },
+          init: function() {
+            http.ajax({
+              url: api.queryAllPostRecord,
+              success: function (res) {
+                vm.postRecords = res.postRecords;
+              }
+            })
           }
         },
         mounted: function() {
-          http.ajax({
-            url: api.queryAllPostRecord,
-            success: function(res) {
-              console.log(res);
-              vm.postRecords = res.postRecords;
-            }
-          })
+          this.init();
         },
       })
 

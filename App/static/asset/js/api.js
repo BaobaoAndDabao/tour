@@ -19,7 +19,9 @@ exports('api', {
   raidersRecommend: '/recommend/raiders',
   queryAllPostRecord: '/postRecord/queryAll',
   queryByPostRecordId: '/postRecord/queryByPostRecordId',
-  insertPostRecord: '/postRecord/insert'
+  insertPostRecord: '/postRecord/insert',
+  replyPostRecord: '/postRecord/reply',
+  deletePostRecord: '/postRecord/delete'
 });
 
 }); 
