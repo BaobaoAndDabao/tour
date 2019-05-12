@@ -162,12 +162,15 @@
             </tr>
           </tbody>
         </table>
+        <div class="pages page" v-show="showPage"></div>
       </div>
     </div>
 
   </div>
   {% endraw %}
   <script type="text/javascript" src="./static/js/xcity.js"></script>
+  <link rel="stylesheet" type="text/css" href="./static/asset/js/page/page.css">
+  <script type="text/javascript" src="./static/asset/js/page/page.js"></script>
   <script>
     layui.use(['http', 'api', 'laydate', 'form', 'amap'], function () {
 
@@ -182,7 +185,8 @@
           startingPlace: '',
           endPlace: '',
           startTime: '',
-          flights: []
+          flights: [],
+          showPage: false
         },
         el: '#app',
         computed: {
@@ -210,6 +214,17 @@
             success: function (res) {
               var flights = res.flights;
               _this.flights = flights;
+              _this.showPage = flights.length > 5;
+              $('.pages').page({
+                info: {
+                  data: vm.flights.concat([]),
+                  pageIndex: 1,
+                  pageCount: 5
+                },
+                fn: function (data) {
+                  vm.flights = data;
+                }
+              });
             }
           });
         }
@@ -238,6 +253,7 @@
           success: function (res) {
             var flights = res.flights;
             vm.flights = flights;
+            
           }
         });
         return false;

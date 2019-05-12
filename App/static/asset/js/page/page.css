@@ -1,0 +1,56 @@
+.i_page_js_out_content{
+
+}
+.page span {
+	/* display: inline-block;
+	padding: 10px;
+	min-width: 15px; */
+	/* border: 0 !important; */
+}
+.numContent {
+	display: inline-block;
+}
+.i_page_js_out_content .i_page_js_in_content{
+	position: relative;
+	width: 336px;
+	margin: 0 auto;
+}
+
+.i_page_js_out_content .page_js .on{
+	display: inline-block;
+	background: #009688 url() 0 0 no-repeat;
+	color: #fff;
+	padding: 10px;
+	min-width: 15px;
+	border: 1px solid #009688;
+}
+.i_page_js_out_content .page_js{
+
+}
+.numContent{
+	width: 160px;
+	margin: 0 auto;
+}
+.i_page_js_out_content .page_js .fir_num,
+.i_page_js_out_content .page_js .next_num,
+.i_page_js_out_content .page_js .numContent .num{
+	display: inline-block;
+	width: 20px;
+	line-height: 20px;
+	text-align: center;
+	border: solid 1px #ccc;
+	margin: 0 5px;
+	cursor: pointer;
+}
+.i_page_js_out_content .page_js .fir_num:hover,
+.i_page_js_out_content .page_js .next_num:hover,
+.i_page_js_out_content .page_js .numContent .num:hover{
+	background: #48BEEF;
+	color:#fff;
+}
+.i_page_js_out_content .page_js .last,
+.i_page_js_out_content .page_js .fir_num,
+.i_page_js_out_content .page_js .next_num,
+.i_page_js_out_content .page_js .next{
+	cursor: pointer;
+}
