@@ -73,7 +73,7 @@ def delete():
     postRecordId=request.form.get('postRecordId')
     if(postRecordId is None):
         return ResData.paramEmpty(postRecordId)
-    postRecord=PostRecord.query.filter(PostRecord.postRecordId==postRecordId).first()
+    postRecord=PostRecord.query.filter(PostRecord.postId==postRecordId).first()
     db.session.delete(postRecord)
     db.session.commit()
     return ResData.success(None)
