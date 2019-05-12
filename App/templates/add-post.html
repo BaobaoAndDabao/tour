@@ -42,7 +42,7 @@
     margin-bottom: 20px;
   }
   .postTitle {
-    /* margin-top: 30px; */
+    border: 1px solid #ccc
   }
   .layui-code {
     height: 300px;
@@ -90,9 +90,9 @@
     
     <div class="main"></div>
       <div class="user-tab-info">
-        <h3 class="postTitle" id="postTitle" contenteditable="true">{{content.postTitle}}</h3>
+        <h3 class="postTitle" id="postTitle" contenteditable="true">我的标题</h3>
         
-        <pre class="layui-code" id="postContent" contenteditable="true" lay-title="JavaScript" lay-skin="notepad">{{content.postContent}}</pre>
+        <pre class="layui-code" id="postContent" contenteditable="true" lay-title="JavaScript" lay-skin="notepad">我的内容</pre>
 
 
         <div class="layui-form layui-col-md12  layui-form-pane">
@@ -115,7 +115,6 @@
 
       var vm = new Vue({
         data: {
-          content: {}
         },
         el: '#app',
         computed: {
@@ -142,15 +141,7 @@
           }
         },
         mounted: function() {
-          http.ajax({
-            url: api.queryByPostRecordId,
-            data: {
-              postRecordId: 1
-            },
-            success: function(res) {
-              vm.content = res;
-            }
-          })
+         
         },
       })
 
